@@ -1,0 +1,6 @@
+{
+  "has been set as the alternate browser for printing.": "は、印刷用の代替ブラウザとして設定されています。",
+  "An “Access Denied” error occurred while starting the embedded webserver": "組み込み Web サーバーの起動中に「アクセスが拒否されました」エラーが発生しました",
+  "An unexpected error occurred": "予期しないエラーが発生しました",
+  "The selected directory contains too many files to print them all. Only the summary will be printed.": "選択したディレクトリに含まれるファイルが多すぎるため、すべてのファイルを印刷できません。サマリーのみが印刷されます。"
+}

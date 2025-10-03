@@ -1,0 +1,108 @@
+= iMac17,1 Broadcom Chip Support
+
+NOTE:
+Out-of-the-box, Ubuntu 24.04 DID NOT have support for the Broadcom “AirPort” module that supports on the 27″ Retina 5K iMac (Late 2015) - a.k.a. iMac17,1. +
+* WiFi worked - probably due to defaut WiFi drivers in 24.04.
+* Bluetooth produced issues per `journalctl`
+
+[source, txt]
+----
+Sep 14 15:29:57 ubuntu kernel: brcmfmac 0000:03:00.0:
+  Direct firmware load for ...
+    brcm/
+      brcmfmac43602-pcie.Apple Inc.-iMac17,1.bin ...
+      brcmfmac43602-pcie.txt ...
+      brcmfmac43602-pcie.clm_blob ...
+      brcmfmac43602-pcie.txcap_blob ...
+        failed with error -2
+----
+
+== Apple's “AirPort” module (BCM94360 / BCM943602):
+
+The iMac17,1 shipped with an Airport module which incuded two components:
+
+  * A Broadcom 802.11ac Wi-chip +
+  _(BCM4360 / BCM43602, BCM94360CD, BCM94360, BCM943602, BCM943602CDP)_
+  * A Broadcom Bluetooth BT4 chip +
+  _(BCM2070 / BCM20702 / BCM20703)_
+
+== Broadcom Driver Support Repository
+
+The repository https://github.com/winterheart/broadcom-bt-firmware.git has a partial set of Broadcom drivers.
+
+=== Reviewing the Options
+
+The ~115 drivers have the format: *[CHIPNAME - VENDOR ID - PRODUCT ID]*
+
+[%autowidth, cols="^,^""]
+|===
+
+2+^h|ISOLATE BY CHIPNAME
+|\*4360* (Wi-Fi) |0
+|\*2070* (BT4) |58
+
+2+^h|ISOLATE BY VENDOR ID
+|\*05ac* (Apple) |0
+|\*04ca* (Lite On Tech) |15
+|\*0b05* (Asus Tech) |5
+
+2+^h|ISOLATE BY PRODUCT
+|\*8294* (BT USB Host Ctrlr) |0
+|\*17cb* (Qualcomm Tech) |1
+
+2+^h|NARROWING OPTIONS
+|BCM2070*-0b05-17cb |1
+|===
+
+== Selecting an Adequate Driver Candidate
+
+We pick a "Close Cousin" to whatever might be in the iMac 17,1. In this case, we land on a Blue Tooth 4 device from Asus Tech that appears to be a Qualcom product:
+
+*BCM20702A1-0b05-17cb*
+
+The hope is this driver will have enough information (about WiFi 802.11ac and BT4) to satisfy the needs of Ubuntu LTS 24.04 running on the iMac.
+
+== Testing with the Driver Candidate
+
+NOTE:
+To facilitate the wget of a GitHub file or folder, use a browser and https to navigate to the specific folder or file:
+
+----
+https://github.com/winterheart/broadcom-bt-firmware/blob/master/brcm/BCM20702A1-0b05-17cb.hcd
+----
+
+Hover over the "view raw" URL and right-click to select "Copy Link Address".
+The resulting link address will look like:
+
+----
+https://github.com/winterheart/broadcom-bt-firmware/raw/refs/heads/master/brcm/BCM20702A1-0b05-17cb.hcd
+                                                   ^^^^^^^^^^^^^^^
+                                                   /raw/refs/heads
+----
+
+Use wget to begin a download of the file (or directory).
+
+----
+wget https://github.com/winterheart/broadcom-bt-firmware/raw/refs/heads/master/brcm/BCM20702A1-0b05-17cb.hcd
+----
+
+NOTE: The file (or directory) will be downloaded to the current directory. If used in a browser, the URL will typically engage the download facility of the browser to determine where to place the download.
+
+.Use the downloaded file as a substitute for brcmfmac43602-*
+----
+sudo cp BCM20702A1-0b05-17cb.hcd /lib/firmware/
+sudo ln -s /lib/firmware/BCM20702A1-0b05-17cb.hcd /lib/firmware/BCM20702A1-05ac-8294.hcd
+ls -lahF /lib/firmware/BCM*
+----
+
+The driver that Ubuntu is seeking for the iMac17,1 *BCM20702A1-05ac-8294.hcd* is a soft link to the surrogate (close cousin) driver *BCM20702A1-0b05-17cb.hcd*.
+
+----
+ls -lahF /lib/firmware/BCM*
+lrwxrwxrwx 1 root root  38 Sep 19 12:37 /lib/firmware/BCM20702A1-05ac-8294.hcd -> /lib/firmware/BCM20702A1-0b05-17cb.hcd
+-rw-r--r-- 1 root root 35K Sep 19 12:37 /lib/firmware/BCM20702A1-0b05-17cb.hcd
+----
+
+On reboot, the iMac will attempt to use the surrogate driver.
+
+NOTE: System backups are advisable before and after driver changes.

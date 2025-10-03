@@ -1,0 +1,4 @@
+# .zprofile
+#   - In a login shell, this file is sourced before .zshrc
+
+# COMMAND ALIASES

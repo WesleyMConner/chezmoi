@@ -1,0 +1,383 @@
+{
+	"name": "blender-development",
+	"displayName": "Blender Development",
+	"description": "Tools to simplify Blender development.",
+	"version": "0.0.26",
+	"publisher": "JacquesLucke",
+	"license": "MIT",
+	"engines": {
+		"vscode": "^1.63.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:blender.start",
+		"onCommand:blender.stop",
+		"onCommand:blender.build",
+		"onCommand:blender.buildAndStart",
+		"onCommand:blender.startWithoutCDebugger",
+		"onCommand:blender.buildPythonApiDocs",
+		"onCommand:blender.reloadAddons",
+		"onCommand:blender.newAddon",
+		"onCommand:blender.newScript",
+		"onCommand:blender.runScript",
+		"onCommand:blender.setScriptContext",
+		"onCommand:blender.openScriptsFolder",
+		"onCommand:blender.newOperator",
+		"onCommand:blender.openWithBlender",
+		"onCommand:blender.openFiles"
+	],
+	"main": "./out/extension",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JacquesLucke/blender_vscode"
+	},
+	"bugs": {
+		"url": "https://github.com/JacquesLucke/blender_vscode/issues"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "blender.start",
+				"title": "Start",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.stop",
+				"title": "Stop",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.build",
+				"title": "Build",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.buildAndStart",
+				"title": "Build and Start",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.startWithoutCDebugger",
+				"title": "Start without C Debugger",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.buildPythonApiDocs",
+				"title": "Build Python API Docs",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.reloadAddons",
+				"title": "Reload Addons",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.newAddon",
+				"title": "New Addon",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.newScript",
+				"title": "New Script",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.runScript",
+				"title": "Run Script",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.setScriptContext",
+				"title": "Set Script Context",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.openScriptsFolder",
+				"title": "Open Scripts Folder",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.newOperator",
+				"title": "New Operator",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.openWithBlender",
+				"title": "Open With Blender",
+				"category": "Blender"
+			},
+			{
+				"command": "blender.openFiles",
+				"title": "Open File(s)",
+				"category": "Blender"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Blender",
+				"properties": {
+					"blender.executables": {
+						"type": "array",
+						"scope": "resource",
+						"description": "Paths to Blender executables.",
+						"items": {
+							"type": "object",
+							"title": "Single Blender Path",
+							"properties": {
+								"path": {
+									"type": "string",
+									"description": "Absolute file path to a Blender executable."
+								},
+								"name": {
+									"type": "string",
+									"description": "Custom name for this Blender version."
+								},
+								"isDebug": {
+									"type": "boolean",
+									"description": "Is this executable a debug build.",
+									"default": false
+								}
+							}
+						}
+					},
+					"blender.allowModifyExternalPython": {
+						"type": "boolean",
+						"scope": "application",
+						"default": false,
+						"description": "Deprecated: automatically installing modules in Python distributions outside of Blender.",
+						"markdownDeprecationMessage": "**Deprecated**: modules are now installed to `bpy.utils.user_resource(\"SCRIPTS\", path=\"modules\")`.",
+						"deprecationMessage": "Deprecated: modules are now installed to `bpy.utils.user_resource(\"SCRIPTS\", path=\"modules\")`."
+					},
+					"blender.addon.reloadOnSave": {
+						"type": "boolean",
+						"scope": "resource",
+						"default": false,
+						"description": "Reload addon in Blender when a document is saved."
+					},
+					"blender.addon.justMyCode": {
+						"type": "boolean",
+						"scope": "resource",
+						"default": true,
+						"description": "If true, debug only the code in this addon. Otherwise, allow stepping into external python library code."
+					},
+					"blender.addon.buildTaskName": {
+						"type": "string",
+						"scope": "resource",
+						"description": "Task that should be executed before the addon can be loaded into Blender."
+					},
+					"blender.addon.loadDirectory": {
+						"type": "string",
+						"scope": "resource",
+						"default": "auto",
+						"examples": [
+							"auto",
+							"./",
+							"./build"
+						],
+						"description": "Directory that contains the addon that should be loaded into Blender."
+					},
+					"blender.addon.sourceDirectory": {
+						"type": "string",
+						"scope": "resource",
+						"default": "auto",
+						"examples": [
+							"auto",
+							"./",
+							"./source"
+						],
+						"description": "Directory that contains the source code of the addon (used for path mapping for the debugger)."
+					},
+					"blender.addon.moduleName": {
+						"type": "string",
+						"scope": "resource",
+						"default": "auto",
+						"examples": [
+							"auto",
+							"my_addon_name"
+						],
+						"description": "Name or the symlink that is created in Blenders addon folder."
+					},
+					"blender.addon.extensionsRepository": {
+						"type": "string",
+						"scope": "resource",
+						"default": "vscode_development",
+						"examples": [
+							"vscode_development",
+							"user_default",
+							"blender_org"
+						],
+						"description": "Blender extensions only: repository to use when developing addon. \nBlender -> Preferences -> Get Extensions -> Repositories (dropdown, top right)",
+						"pattern": "^[\\w_]+$",
+						"patternErrorMessage": "Must be valid name of Python module (allowed: lower/upper case, underscore)"
+					},
+					"blender.core.buildDebugCommand": {
+						"type": "string",
+						"scope": "resource",
+						"description": "Command used to compile Blender.",
+						"default": "make debug"
+					},
+					"blender.scripts.directories": {
+						"type": "array",
+						"scope": "application",
+						"description": "Directories to store scripts in.",
+						"items": {
+							"type": "object",
+							"title": "Single Script Directory",
+							"properties": {
+								"path": {
+									"type": "string",
+									"description": "Absolute file path to a Blender executable."
+								},
+								"name": {
+									"type": "string",
+									"description": "Custom name for this Blender version."
+								}
+							}
+						}
+					},
+					"blender.addonFolders": {
+						"type": "array",
+						"scope": "resource",
+						"description": "Array of paths to addon folders. Relative folders are resolved from the path of root workspace. If empty workspace folders are used.",
+						"items": {
+							"type": "string"
+						}
+					},
+					"blender.environmentVariables": {
+						"type": "object",
+						"scope": "resource",
+						"title": "Startup Environment Variables",
+						"description": "Environment variables set before Blender starts. Keys of the object are used as environment variable names, values as values.",
+						"examples": [
+							{
+								"BLENDER_USER_SCRIPTS": "C:/custom_scripts_folder",
+								"BLENDER_USER_CONFIG": "C:/custom_user_config"
+							}
+						]
+					},
+					"blender.additionalArguments": {
+						"type": "array",
+						"scope": "resource",
+						"title": "Command Line Additional Arguments",
+						"markdownDescription": "Additional arguments used for starting Blender via the `Blender: Start` command. One argument per line. Note: option `--python` is already used by `blender_vscode` extension.",
+						"items": {
+							"type": "string"
+						},
+						"examples": [
+							[
+								"--factory-startup"
+							]
+						]
+					},
+					"blender.preFileArguments": {
+						"type": "array",
+						"scope": "resource",
+						"title": "Command Line Arguments: Before File Path",
+						"markdownDescription": "Arguments passed **before** file path, used only with `Open With Blender`(right click menu) and `Blender: Open File(s)` commands.\n\nPopulates 'preFileArgs' in `blender.exe [preFileArgs ...] [file] [postFileArgs ...]`",
+						"items": {
+							"type": "string"
+						},
+						"examples": [
+							[
+								"--window-fullscreen"
+							]
+						]
+					},
+					"blender.postFileArguments": {
+						"type": "array",
+						"scope": "resource",
+						"title": "Command Line Arguments: After File Path",
+						"markdownDescription": "Arguments passed **after** file path, used only with `Open With Blender`(right click menu) and `Blender: Open File(s)` commands.\n\nPopulates 'preFileArgs' in `blender.exe [preFileArgs ...] [file] [postFileArgs ...]`",
+						"items": {
+							"type": "string"
+						},
+						"examples": [
+							[
+								"--render-output",
+								"/tmp"
+							]
+						]
+					},
+					"blender.addon.logLevel": {
+						"type": "string",
+						"scope": "resource",
+						"description": "Log level for blender_vscode extension inside Blender. Debug is most verbose.",
+						"default": "info",
+						"enum": [
+							"debug-with-flask",
+							"debug",
+							"info",
+							"warning",
+							"error",
+							"critical"
+						]
+					}
+				}
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "blender.openWithBlender",
+					"when": "false"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "blender.openWithBlender",
+					"group": "navigation",
+					"when": "resourceScheme == file && resourceExtname == .blend"
+				}
+			]
+		},
+		"languages": [
+			{
+				"id": "blend",
+				"extensions": [
+					".blend"
+				],
+				"aliases": [
+					"Blend File",
+					"blend"
+				],
+				"icon": {
+					"light": "./icons/blender_icon.ico",
+					"dark": "./icons/blender_icon.ico"
+				},
+				"filenames": [
+					"blender",
+					"blender.exe",
+					"blender-launcher",
+					"blender-launcher.exe"
+				]
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^8.10.25",
+		"@types/request": "^2.48.1",
+		"@types/vscode": "^1.28.0",
+		"tslint": "^5.8.0",
+		"typescript": "^5.5.2"
+	},
+	"dependencies": {
+		"request": "^2.87.0"
+	},
+	"extensionDependencies": [
+		"ms-python.python",
+		"ms-vscode.cpptools"
+	],
+	"__metadata": {
+		"installedTimestamp": 1756916756753,
+		"targetPlatform": "undefined",
+		"size": 6891059
+	}
+}

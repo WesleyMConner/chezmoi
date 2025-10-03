@@ -1,0 +1,2 @@
+brew install python
+ln -s /opt/homebrew/bin/python3 ~/bin/python

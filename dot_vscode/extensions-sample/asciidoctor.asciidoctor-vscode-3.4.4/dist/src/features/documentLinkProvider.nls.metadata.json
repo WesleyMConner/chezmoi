@@ -1,0 +1,15 @@
+{
+	"messages": [
+		"follow link",
+		"Open file {0}",
+		"Open file {0}",
+		"Open file {0}"
+	],
+	"keys": [
+		"links.navigate.follow",
+		"documentLink.openFile.tooltip",
+		"documentLink.openFile.tooltip",
+		"documentLink.openFile.tooltip"
+	],
+	"filePath": "features/documentLinkProvider"
+}

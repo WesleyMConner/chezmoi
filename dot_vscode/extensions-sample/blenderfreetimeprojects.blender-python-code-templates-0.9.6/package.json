@@ -1,0 +1,44 @@
+{
+	"name": "blender-python-code-templates",
+	"displayName": "Blender Python Code Templates",
+	"description": "Templates for Blender Addon development. Templates translated are from Blender python templates and from Jacques Lucke's Code Autocomplete addon with my own additions.",
+	"version": "0.9.6",
+	"publisher": "blenderfreetimeprojects",
+	"license": "MIT",
+	"icon": "images/icon.png",
+	"keywords": [
+		"blender",
+		"snippets",
+		"python",
+		"api"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nikorummukainen/blender-python-code-templates"
+	},
+	"bugs": {
+		"url": "https://github.com/nikorummukainen/blender-python-code-templates/issues"
+	},
+	"engines": {
+		"vscode": "^1.19.0"
+	},
+	"categories": [
+		"Snippets"
+	],
+	"contributes": {
+		"snippets": [
+			{
+				"language": "python",
+				"path": "./snippets/snippets.json"
+			}
+		]
+	},
+	"scripts": {
+		"table": "node helpers/documentation_table.js"
+	},
+	"__metadata": {
+		"installedTimestamp": 1756916717573,
+		"targetPlatform": "undefined",
+		"size": 114495
+	}
+}

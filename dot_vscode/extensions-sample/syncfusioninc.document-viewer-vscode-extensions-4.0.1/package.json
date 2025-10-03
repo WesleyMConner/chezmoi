@@ -1,0 +1,230 @@
+{
+	"name": "Document-Viewer-VSCode-Extensions",
+	"displayName": "Document Viewer",
+	"description": "View PDF, Word, Excel, and Markdown files directly in VS Code without external applications.",
+	"version": "4.0.1",
+	"icon": "resources/icon.png",
+	"license": "Syncfusion®",
+	"engines": {
+		"vscode": "^1.73.0"
+	},
+	"homepage": "https://help.syncfusion.com/",
+	"bugs": {
+		"url": "https://www.syncfusion.com/support/directtrac/incidents"
+	},
+	"publisher": "SyncfusionInc",
+	"repository": {
+		"url": "https://github.com/syncfusion/ej2-javascript-ui-controls"
+	},
+	"categories": [
+		"Visualization"
+	],
+	"activationEvents": [
+		"onCustomEditor:syncfusion-csv-viewer",
+		"onLanguage:csv",
+		"onLanguage:excel",
+		"onLanguage:word",
+		"onCustomEditor:syncfusion-word-viewer",
+		"onCustomEditor:syncfusion-excel-viewer",
+		"onCommand:DocumentViewer.showModeQuickPick"
+	],
+	"main": "./dist/extension.js",
+	"browser": "./dist/extension.js",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Document Viewer",
+			"properties": {
+				"documentViewer.readOnly": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable or disable read-only mode in the Document Viewer.",
+					"title": "Read Only"
+				},
+				"documentViewer.filtering": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable or disable filtering on the first row of the worksheet.",
+					"title": "Filtering"
+				}
+			}
+		},
+		"languages": [
+			{
+				"id": "csv",
+				"extensions": [
+					".csv"
+				],
+				"aliases": [
+					"CSV"
+				]
+			},
+			{
+				"id": "excel",
+				"extensions": [
+					".xlsx"
+				],
+				"aliases": [
+					"Excel"
+				]
+			}
+		],
+		"customEditors": [
+			{
+				"viewType": "syncfusion-csv-viewer",
+				"displayName": "CSV editor",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "*.csv"
+					},
+					{
+						"filenamePattern": "*.tsv"
+					}
+				]
+			},
+			{
+				"viewType": "syncfusion-excel-viewer",
+				"displayName": "Excel editor",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "*.xlsx"
+					},
+					{
+						"filenamePattern": "*.xls"
+					},
+					{
+						"filenamePattern": "*.xltx"
+					},
+					{
+						"filenamePattern": "*.xlt"
+					}
+				]
+			},
+			{
+				"viewType": "syncfusion-word-viewer",
+				"displayName": "Word editor",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "*.docx"
+					},
+					{
+						"filenamePattern": "*.doc"
+					},
+					{
+						"filenamePattern": "*.dot"
+					},
+					{
+						"filenamePattern": "*.dotx"
+					},
+					{
+						"filenamePattern": "*.rtf"
+					}
+				]
+			},
+			{
+				"viewType": "syncfusion-pdf-viewer",
+				"displayName": "Pdf viewer",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "*.pdf"
+					}
+				]
+			},
+			{
+				"viewType": "syncfusion-rich-text-editor",
+				"displayName": "Markdown Editor",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "*.md"
+					}
+				]
+			}
+		],
+		"commands": [
+			{
+				"command": "DocumentViewer.showModeQuickPick",
+				"title": "Syncfusion®: Show Document Viewer"
+			}
+		]
+	},
+	"keywords": [
+		"syncfusion",
+		"document viewer",
+		"Csv",
+		"Excel",
+		"Tsv",
+		"docx",
+		"word",
+		"doc",
+		"dotx",
+		"dot",
+		"rtf",
+		"pdf",
+		"md",
+		"Xls",
+		"Xlsx",
+		"Xlt",
+		"Xltx",
+		"Markdown",
+		"Office documents",
+		"Editor",
+		"File viewer",
+		"spreadsheet",
+		"viewer",
+		"vscode",
+		"Sorting",
+		"Data",
+		"Filtering",
+		"Read-Only"
+	],
+	"preview": false,
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": true
+		},
+		"virtualWorkspaces": true
+	},
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"compile": "webpack --mode none",
+		"watch": "webpack --mode none --watch",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"compile-web": "webpack --config ./webpack.config.js",
+		"watch-web": "webpack --watch --config ./webpack.config.js",
+		"package-web": "webpack --mode production --devtool hidden-source-map --config ./webpack.config.js",
+		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ./data"
+	},
+	"devDependencies": {
+		"@types/mocha": "^10.0.0",
+		"@types/node": "16.x",
+		"@types/vscode": "^1.73.0",
+		"@types/webpack-env": "^1.18.0",
+		"@vscode/test-web": "^0.0.33",
+		"assert": "^2.0.0",
+		"eslint": "^8.32.0",
+		"mocha": "^10.1.0",
+		"process": "^0.11.10",
+		"ts-loader": "^9.4.1",
+		"typescript": "^4.8.4",
+		"webpack": "^5.96.1",
+		"webpack-cli": "^4.10.0"
+	},
+	"dependencies": {
+		"marked": "^16.1.1",
+		"path-browserify": "^1.0.1",
+		"turndown": "^7.2.0",
+		"vscode-uri": "^3.0.7"
+	},
+	"__metadata": {
+		"installedTimestamp": 1756921920319,
+		"targetPlatform": "undefined",
+		"size": 633720305
+	}
+}

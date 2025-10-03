@@ -1,0 +1,77 @@
+//cSpell:words adoc esbenp kroki scrollback shellcheck
+{
+  // ---------------------------------------------------------------------------
+  // G I T P O D   M U L T I - R E P O
+  //   When using Gitpod Multi-Repo, some VsCode configurations
+  //   (e.g., "asciidoc.use_kroki": true), must be specified in in the
+  //   'main.code-workspace' file's 'settings' block (as opposed to a per
+  //   participant settings.json file). Such settings will appear grayed out.
+  //
+  // B E S T   P R A C T I C E S
+  //   - Prefer editor-neutral configuration files when possible:
+  //       - .editorconfig
+  //       - .eslintignore
+  //       - .eslintrc.cjs
+  //       - .gitignore
+  //       - cspell.yaml
+  //       - jest.config.ts
+  //       - tsconfig.Base.json
+  //       - tsconfig.json
+  //
+  // P E R S O N A L  S E T T I N G S
+  //   - Gitpod facilitates cross-workspace settings in web-based Gitpod,
+  //     see: https://www.gitpod.io/docs/ides-and-editors/settings-sync
+  // ---------------------------------------------------------------------------
+  // See https://github.com/microsoft/vscode-docs/blob/vnext/release-notes/v1_43.md#multiple-rulers-with-different-colors
+  "editor.rulers": [ { "column": 80, "color": "#cccccc" } ],
+  "[plaintext]": {
+    "editor.rulers": [ { "column": 80, "color": "#FF0000", "foreground": "#babe23"} ]
+  },
+  "[asciidoc]": {
+    "editor.rulers": [ { "column": 80, "color": "#FF0000" } ]
+  },
+  "[typescript]": {
+    "editor.rulers": [
+      { "column": 85, "color": "#CCCCCC" },
+      { "column": 100, "color": "#ff2222" }
+    ],
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "asciidoc.use_kroki": true,
+  "asciidoc.preview.attributes": {},
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+  "editor.fontFamily": "Fira Code",
+  "explorer.exclude": {
+    // Hide AppleOS BS Directories (use relative paths fro project root)
+    "**/.DS_Store": true,
+    "**/.Trash": true,
+    "**/Applications": true,
+    "**/Desktop": true,
+    "**/Documents": true,
+    "**/Downloads": true,
+    "**/Movies": true,
+    "**/Music": true,
+    "**/Pictures": true,
+    "**/Library": true,
+    "**/Sync": true,
+    "**/*Google Drive*": true,
+    // Hide Cloud Drive Links
+    "**/gdrive*": true,
+    "OneDrive": true
+  },
+  "files.associations": {
+    "*.json": "jsonc" // Allow comments in all JSON (from a VsCode linting perspective).
+  },
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "search.exclude": {
+    "**/*.*.adoc": true, // Exclude AsciiDoc files created from "Snippets".
+    "__data__/": true, // All files under __data__/
+    "coverage/": true, // All files under coverage/
+    "dist/": true // All files under dist/ (prefer src/)
+  },
+  "shellcheck.executablePath": "node_modules/shellcheck/shellcheck-stable/shellcheck",
+  "terminal.integrated.fontFamily": "Fira Code",
+  "terminal.integrated.scrollback": 8000
+}

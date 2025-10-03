@@ -1,0 +1,6 @@
+## ----------------------------------------------------------------------------
+## Shellcheck has difficulty checking code sourced into a file.
+## Disabling the following warnings.
+## ----------------------------------------------------------------------------
+disable=SC1090  # Can't follow non-constant source. Use a directive to specify location.
+disable=SC1091  # Not following: XXX was not specified as input (see shellcheck -x).

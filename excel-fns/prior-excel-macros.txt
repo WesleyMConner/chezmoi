@@ -1,0 +1,8 @@
+Function DailyRate(PeriodRate, PeriodDays)
+  DailyRate = (1 + PeriodRate) ^ (1 / PeriodDays) - 1
+End Function
+
+Function ApplyDailyRate(AmtIn, DailyRate, Days)
+  ApplyDailyRate = ((1 + DailyRate) ^ Days) * AmtIn
+End Function
+ 

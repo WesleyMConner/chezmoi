@@ -1,0 +1,7 @@
+{
+  "github.copilot": "https://example.com/path/to/<file>.vsix",
+  "github.copilot-chat": "https://example.com/path/to/<file>.vsix",
+  "ms-python.debugpy": "https://example.com/path/to/<file>.vsix",
+  "ms-python.vscode-python-envs": "https://example.com/path/to/<file>.vsix",
+  "ms-vscode.remote-explorer": "https://example.com/path/to/<file>.vsix"
+}

@@ -1,0 +1,161 @@
+2025-07-27 09:45:34 debug: Responding to base document request for session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:34 debug: Using the document renderer for markdown
+2025-07-27 09:45:34 debug: Printing d:\book\lib\Heat.md
+2025-07-27 09:45:34 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:45:34 debug: Responding to bundled request for default-markdown.css in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:34 debug: Using the document renderer for markdown
+2025-07-27 09:45:34 debug: Responding to bundled request for katex.css in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:34 debug: Using the document renderer for markdown
+2025-07-27 09:45:34 debug: Responding to bundled request for colour-scheme.css in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:34 debug: Loading colour scheme from ascetic
+2025-07-27 09:45:34 debug: Responding to workspace.resource request for session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:34 error: The "path" argument must be of type string. Received undefined
+2025-07-27 09:45:35 error: Error: ENOENT: no such file or directory, stat 'd:\book\lib\absolute\d:\test.css'
+2025-07-27 09:45:35 debug: Responding to bundled request for settings.css in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Responding to bundled request for smiles-drawer.min.js in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Using the document renderer for markdown
+2025-07-27 09:45:35 debug: Responding to bundled request for smartquotes.js in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Using the document renderer for markdown
+2025-07-27 09:45:35 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:45:35 debug: Responding to bundled request for fonts in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Using the document renderer for markdown
+2025-07-27 09:45:35 debug: Responding to bundled request for fonts in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Using the document renderer for markdown
+2025-07-27 09:45:35 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:45:35 debug: Responding to bundled request for smiles-drawer.min.js.map in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Using the document renderer for markdown
+2025-07-27 09:45:35 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:45:35 debug: Responding to bundled request for smartquotes.js.map in session df6d9603-fc0d-4289-836e-d8ef90598812
+2025-07-27 09:45:35 debug: Using the document renderer for markdown
+2025-07-27 09:45:35 info: WebSocket configured for document changes
+2025-07-27 09:49:11 debug: Print activated
+2025-07-27 09:49:11 debug: Settings migration: copied print.logLevel = debug to print.general.logLevel
+2025-07-27 09:49:11 debug: Registered a document renderer for the following languages: markdown
+2025-07-27 09:49:11 debug: Registered a document renderer for the following languages: plaintext
+2025-07-27 09:49:12 info: Began listening on 127.0.0.1:63059
+2025-07-27 09:49:12 debug: Settings migration: print.filepathHeadingForIndividuallyPrintedDocuments was not set
+2025-07-27 09:49:12 debug: Settings migration: print.filepathInDocumentTitle was not set
+2025-07-27 09:49:12 debug: Settings migration: print.filepathAsDocumentHeading was not set
+2025-07-27 09:49:12 debug: Settings migration: print.editorContextMenuItemPosition was not set
+2025-07-27 09:49:12 debug: Settings migration: print.editorTitleMenuButtonPrint was not set
+2025-07-27 09:49:12 debug: Settings migration: print.editorTitleMenuButtonPreview was not set
+2025-07-27 09:49:12 debug: Settings migration: copied print.alternateBrowser = [object Object] to print.browser.useAlternate
+2025-07-27 09:49:14 debug: Preview command was invoked
+2025-07-27 09:49:14 debug: Creating a print session object for file:///d%3A/book/lib/Heat.md
+2025-07-27 09:49:14 debug: Using the buffer of the active editor
+2025-07-27 09:49:14 debug: Source code line numbers will be printed
+2025-07-27 09:49:14 debug: Source code colour scheme is "Ascetic"
+2025-07-27 09:49:51 debug: Responding to base document request for session 61ef87ce-aa7c-4d6a-97b4-70a92a44459a
+2025-07-27 09:49:51 debug: Using the document renderer for markdown
+2025-07-27 09:49:51 debug: Printing d:\book\lib\Heat.md
+2025-07-27 09:50:11 debug: Responding to bundled request for default-markdown.css in session 61ef87ce-aa7c-4d6a-97b4-70a92a44459a
+2025-07-27 09:50:11 debug: Using the document renderer for markdown
+2025-07-27 09:50:20 debug: Responding to bundled request for katex.css in session 61ef87ce-aa7c-4d6a-97b4-70a92a44459a
+2025-07-27 09:50:20 debug: Using the document renderer for markdown
+2025-07-27 09:52:39 debug: Print activated
+2025-07-27 09:52:39 debug: Settings migration: copied print.logLevel = debug to print.general.logLevel
+2025-07-27 09:52:39 debug: Registered a document renderer for the following languages: markdown
+2025-07-27 09:52:39 debug: Registered a document renderer for the following languages: plaintext
+2025-07-27 09:52:39 info: Began listening on 127.0.0.1:63235
+2025-07-27 09:52:44 debug: Settings migration: print.filepathHeadingForIndividuallyPrintedDocuments was not set
+2025-07-27 09:52:44 debug: Settings migration: print.filepathInDocumentTitle was not set
+2025-07-27 09:52:44 debug: Settings migration: print.filepathAsDocumentHeading was not set
+2025-07-27 09:52:44 debug: Settings migration: print.editorContextMenuItemPosition was not set
+2025-07-27 09:52:44 debug: Settings migration: print.editorTitleMenuButtonPrint was not set
+2025-07-27 09:52:44 debug: Settings migration: print.editorTitleMenuButtonPreview was not set
+2025-07-27 09:52:44 debug: Settings migration: copied print.alternateBrowser = [object Object] to print.browser.useAlternate
+2025-07-27 09:54:00 debug: Preview command was invoked
+2025-07-27 09:54:00 debug: Creating a print session object for file:///d%3A/book/lib/Heat.md
+2025-07-27 09:54:00 debug: Using the buffer of the active editor
+2025-07-27 09:54:00 debug: Source code line numbers will be printed
+2025-07-27 09:54:00 debug: Source code colour scheme is "Ascetic"
+2025-07-27 09:54:01 debug: Responding to base document request for session e649f41d-62de-4146-af94-6d8390c2b90a
+2025-07-27 09:54:01 debug: Using the document renderer for markdown
+2025-07-27 09:54:01 debug: Printing d:\book\lib\Heat.md
+2025-07-27 09:54:16 debug: Responding to bundled request for default-markdown.css in session e649f41d-62de-4146-af94-6d8390c2b90a
+2025-07-27 09:54:16 debug: Using the document renderer for markdown
+2025-07-27 09:56:28 debug: Print activated
+2025-07-27 09:56:28 debug: Settings migration: copied print.logLevel = debug to print.general.logLevel
+2025-07-27 09:56:28 debug: Registered a document renderer for the following languages: markdown
+2025-07-27 09:56:28 debug: Registered a document renderer for the following languages: plaintext
+2025-07-27 09:56:28 info: Began listening on 127.0.0.1:63433
+2025-07-27 09:56:28 debug: Settings migration: print.filepathHeadingForIndividuallyPrintedDocuments was not set
+2025-07-27 09:56:28 debug: Settings migration: print.filepathInDocumentTitle was not set
+2025-07-27 09:56:28 debug: Settings migration: print.filepathAsDocumentHeading was not set
+2025-07-27 09:56:28 debug: Settings migration: print.editorContextMenuItemPosition was not set
+2025-07-27 09:56:28 debug: Settings migration: print.editorTitleMenuButtonPrint was not set
+2025-07-27 09:56:28 debug: Settings migration: print.editorTitleMenuButtonPreview was not set
+2025-07-27 09:56:28 debug: Settings migration: copied print.alternateBrowser = [object Object] to print.browser.useAlternate
+2025-07-27 09:57:37 debug: Preview command was invoked
+2025-07-27 09:57:37 debug: Creating a print session object for file:///d%3A/book/lib/Heat.md
+2025-07-27 09:57:37 debug: Using the buffer of the active editor
+2025-07-27 09:57:37 debug: Source code line numbers will be printed
+2025-07-27 09:57:37 debug: Source code colour scheme is "Ascetic"
+2025-07-27 09:57:37 debug: Responding to base document request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:57:37 debug: Using the document renderer for markdown
+2025-07-27 09:57:37 debug: Printing d:\book\lib\Heat.md
+2025-07-27 09:57:42 debug: Responding to bundled request for default-markdown.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:57:42 debug: Using the document renderer for markdown
+2025-07-27 09:57:43 debug: Responding to bundled request for smiles-drawer.min.js in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:57:43 debug: Using the document renderer for markdown
+2025-07-27 09:57:48 debug: Responding to bundled request for katex.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:57:48 debug: Using the document renderer for markdown
+2025-07-27 09:57:54 debug: Responding to bundled request for colour-scheme.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:57:54 debug: Loading colour scheme from ascetic
+2025-07-27 09:57:58 debug: Responding to workspace.resource request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:57:58 error: The "path" argument must be of type string. Received undefined
+2025-07-27 09:58:06 debug: Responding to absolute path resource request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:58:51 debug: Responding to bundled request for settings.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:58:51 debug: Responding to bundled request for smartquotes.js in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:58:51 debug: Using the document renderer for markdown
+2025-07-27 09:58:51 debug: Responding to bundled request for fonts in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:58:51 debug: Using the document renderer for markdown
+2025-07-27 09:58:51 debug: Responding to bundled request for fonts in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:58:51 debug: Using the document renderer for markdown
+2025-07-27 09:58:51 info: WebSocket configured for document changes
+2025-07-27 09:59:07 debug: Responding to bundled request for default-markdown.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:07 debug: Using the document renderer for markdown
+2025-07-27 09:59:07 debug: Responding to bundled request for katex.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:07 debug: Using the document renderer for markdown
+2025-07-27 09:59:07 debug: Responding to bundled request for colour-scheme.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:07 debug: Loading colour scheme from ascetic
+2025-07-27 09:59:07 debug: Responding to workspace.resource request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:07 error: The "path" argument must be of type string. Received undefined
+2025-07-27 09:59:07 debug: Responding to absolute path resource request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Responding to bundled request for settings.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:59:13 debug: Responding to bundled request for smiles-drawer.min.js.map in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Using the document renderer for markdown
+2025-07-27 09:59:13 debug: Responding to bundled request for smartquotes.js.map in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Using the document renderer for markdown
+2025-07-27 09:59:13 debug: Responding to base document request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Using the document renderer for markdown
+2025-07-27 09:59:13 debug: Printing d:\book\lib\Heat.md
+2025-07-27 09:59:13 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:59:13 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:59:13 debug: Responding to bundled request for default-markdown.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Using the document renderer for markdown
+2025-07-27 09:59:13 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:59:13 debug: Responding to bundled request for katex.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Using the document renderer for markdown
+2025-07-27 09:59:13 debug: Responding to absolute path resource request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Responding to bundled request for colour-scheme.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Loading colour scheme from ascetic
+2025-07-27 09:59:13 debug: Responding to workspace.resource request for session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 error: The "path" argument must be of type string. Received undefined
+2025-07-27 09:59:13 debug: Responding to bundled request for settings.css in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:13 debug: Responding to bundled request for smiles-drawer.min.js in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:14 debug: Using the document renderer for markdown
+2025-07-27 09:59:14 debug: Responding to bundled request for smartquotes.js in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:14 debug: Using the document renderer for markdown
+2025-07-27 09:59:14 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:59:14 debug: Responding to bundled request for fonts in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:14 debug: Using the document renderer for markdown
+2025-07-27 09:59:14 warn: Dropping connection of /.well-known/appspecific/com.chrome.devtools.json does not correspond to a print session
+2025-07-27 09:59:14 debug: Responding to bundled request for smiles-drawer.min.js.map in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:14 debug: Using the document renderer for markdown
+2025-07-27 09:59:14 debug: Responding to bundled request for fonts in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:14 debug: Using the document renderer for markdown
+2025-07-27 09:59:14 debug: Responding to bundled request for smartquotes.js.map in session 3a0c4341-fdf7-4a46-a7ab-3296f312d987
+2025-07-27 09:59:14 debug: Using the document renderer for markdown
+2025-07-27 09:59:14 info: WebSocket configured for document changes

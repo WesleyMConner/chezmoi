@@ -1,0 +1,46 @@
+original,id,version,arch,classification,reason
+asciidoctor.asciidoctor-vscode-3.4.4,asciidoctor.asciidoctor-vscode,3.4.4,,easy (Open VSX likely),
+blenderfreetimeprojects.blender-python-code-templates-0.9.6,blenderfreetimeprojects.blender-python-code-templates,0.9.6,,easy (Open VSX likely),
+davidfreer.go-to-character-position-2.0.2,davidfreer.go-to-character-position,2.0.2,,easy (Open VSX likely),
+docker.docker-0.16.0-darwin-arm64,docker.docker,0.16.0-darwin,arm64,ill-advised,Use ms-azuretools.vscode-docker instead (official Docker extension).
+eamodio.gitlens-17.4.1,eamodio.gitlens,17.4.1,,easy (Open VSX likely),
+ecmel.vscode-html-css-2.0.13,ecmel.vscode-html-css,2.0.13,,easy (Open VSX likely),
+editorconfig.editorconfig-0.17.4,editorconfig.editorconfig,0.17.4,,easy (Open VSX likely),
+esbenp.prettier-vscode-11.0.0,esbenp.prettier-vscode,11.0.0,,easy (Open VSX likely),
+george-alisson.html-preview-vscode-0.2.5,george-alisson.html-preview-vscode,0.2.5,,easy (Open VSX likely),
+github.copilot-1.364.0,github.copilot,1.364.0,,special handling,Not on Open VSX or restricted (VSIX/manual needed).
+github.copilot-chat-0.30.3,github.copilot-chat,0.30.3,,special handling,Not on Open VSX or restricted (VSIX/manual needed).
+jacqueslucke.blender-development-0.0.26,jacqueslucke.blender-development,0.0.26,,easy (Open VSX likely),
+ludwhe.vscode-uuid-2.0.0,ludwhe.vscode-uuid,2.0.0,,easy (Open VSX likely),
+mbehr1.vsc-webshark-2.4.2,mbehr1.vsc-webshark,2.4.2,,easy (Open VSX likely),
+mechatroner.rainbow-csv-3.21.0,mechatroner.rainbow-csv,3.21.0,,easy (Open VSX likely),
+ms-python.debugpy-2025.10.0-darwin-arm64,ms-python.debugpy,2025.10.0-darwin,arm64,ill-advised,Usually a dependency auto-installed by Python; no need to install separately.
+ms-python.python-2025.12.0-darwin-arm64,ms-python.python,2025.12.0-darwin,arm64,easy (Open VSX likely),
+ms-python.vscode-pylance-2025.7.1,ms-python.vscode-pylance,2025.7.1,,easy (Open VSX likely),
+ms-python.vscode-python-envs-1.2.0-darwin-arm64,ms-python.vscode-python-envs,1.2.0-darwin,arm64,ill-advised,Internal component; not needed directly.
+ms-vscode.cpptools-1.26.3-darwin-arm64,ms-vscode.cpptools,1.26.3-darwin,arm64,easy (Open VSX likely),
+ms-vscode.remote-explorer-0.5.0,ms-vscode.remote-explorer,0.5.0,,ill-advised,Not useful in code-server (you're already remote).
+nicolasvuillamy.vscode-groovy-lint-3.3.1,nicolasvuillamy.vscode-groovy-lint,3.3.1,,easy (Open VSX likely),
+pdconsec.vscode-print-1.6.0,pdconsec.vscode-print,1.6.0,,easy (Open VSX likely),
+redhat.vscode-xml-0.29.0-darwin-arm64,redhat.vscode-xml,0.29.0-darwin,arm64,easy (Open VSX likely),
+redhat.vscode-yaml-1.18.0,redhat.vscode-yaml,1.18.0,,easy (Open VSX likely),
+streetsidesoftware.code-spell-checker-4.2.6,streetsidesoftware.code-spell-checker,4.2.6,,easy (Open VSX likely),
+streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries-2.0.9,streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries,2.0.9,,easy (Open VSX likely),
+stylelint.vscode-stylelint-1.5.3,stylelint.vscode-stylelint,1.5.3,,easy (Open VSX likely),
+syncfusioninc.document-viewer-vscode-extensions-4.0.1,syncfusioninc.document-viewer-vscode-extensions,4.0.1,,easy (Open VSX likely),
+timonwong.shellcheck-0.38.3-darwin-arm64,timonwong.shellcheck,0.38.3-darwin,arm64,easy (Open VSX likely),
+tomoki1207.pdf-1.2.2,tomoki1207.pdf,1.2.2,,easy (Open VSX likely),
+zainchen.json-2.0.2,zainchen.json,2.0.2,,easy (Open VSX likely),
+zamerick.vscode-caddyfile-syntax-1.0.4,zamerick.vscode-caddyfile-syntax,1.0.4,,easy (Open VSX likely),
+zhuangtongfa.material-theme-3.19.0,zhuangtongfa.material-theme,3.19.0,,easy (Open VSX likely),
+zjffun.snippetsmanager-0.3.17,zjffun.snippetsmanager,0.3.17,,easy (Open VSX likely),
+aabegg.vscode-bcrypt-0.0.5,aabegg.vscode-bcrypt,0.0.5,,easy (Open VSX likely),
+asciidoctor.asciidoctor-vscode-3.4.5,asciidoctor.asciidoctor-vscode,3.4.5,,easy (Open VSX likely),
+dnicolson.binary-plist-0.11.5,dnicolson.binary-plist,0.11.5,,easy (Open VSX likely),
+george-alisson.html-preview-vscode-0.2.5,george-alisson.html-preview-vscode,0.2.5,,easy (Open VSX likely),
+github.copilot-1.372.0,github.copilot,1.372.0,,special handling,Not on Open VSX or restricted (VSIX/manual needed).
+github.copilot-chat-0.31.1,github.copilot-chat,0.31.1,,special handling,Not on Open VSX or restricted (VSIX/manual needed).
+jannisx11.batch-rename-extension-0.0.6,jannisx11.batch-rename-extension,0.0.6,,easy (Open VSX likely),
+timonwong.shellcheck-0.38.3-darwin-arm64,timonwong.shellcheck,0.38.3-darwin,arm64,easy (Open VSX likely),
+stkb.rewrap,stkb.rewrap,,,easy (Open VSX likely),
+muhammad-ahmad.xlsx-viewer-1.5.0,muhammad-ahmad.xlsx-viewer,1.5.1,,,

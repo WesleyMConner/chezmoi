@@ -1,0 +1,170 @@
+= Interacting with the 1Password CLI
+
+See .scripts/1pwd-install.sh
+
+== Enable the 1Password Command Line Interface (CLI)
+
+Enable CLI integration by opening the 1Password desktop app and navigating to
+Settings -> Developer. Ensure Integrate with 1Password CLI is checked.
+
+Make sure your sensitive data is stored as a "Secure Note" or "Login" item
+in your 1Password vault. For this example, assume you have a Secure Note named
+"SMB Credentials" with fields for username and password.
+
+== Example Script for Securely mounting an SMB share (manually)
+
+. The script uses `op read` to fetch credentials from the 1Pwd vault and write
+them to a temporary file. The temporary file is deleted immediately after
+command execution.
+
+. Populate the temporary file by reading from 1Pwd using a "secret reference"
+(e.g., op://<vault>/<item>/<field>.
+
+. Use the temporary file to execute the goal command (e.g., `mount`).
+
+. Remove the temporary file.
+
+NOTE: Use `sudo` to run the mount command, but NOT the `op` command. The `op`
+command runs as the regular user (e.g., wes).
+
+.Sample Script
+[source, bash]
+----
+#!/bin/bash
+
+# Create a temporary, secure file
+cred_file=$(mktemp)
+chmod 600 "$cred_file"
+
+# Populate the file with credentials from 1Password
+op read "op://Private/SMB Credentials/username" >> "$cred_file"
+op read "op://Private/SMB Credentials/password" >> "$cred_file"
+
+# Run your administrative command using the credentials file
+# Use 'sudo' only for the command that requires elevated privileges
+sudo mount -t cifs -o credentials="$cred_file" //server/share /mnt/mountpoint
+
+# Securely erase and remove the temporary file
+shred --remove "$cred_file"
+----
+
+WARNING:: This is a simple example. For production or critical systems,
+consider more robust, enterprise-focused solutions offered by 1Password
+Secrets Automation or 1Password Connect.
+
+NOTE: Enable biometrics for CLI authentication (i.e., 1Pwd -> Settings ->
+Security _enable "Unlock using system authentication"_ AND 1Pwd -> Settings ->
+Developer _ensure "Integrate with 1Password CLI" is checked_). Use `op run` to
+inject secrets for temporary use.
+
+NOTE: *1Password Connect*: Deploys a self-hosted server that provides an API
+for applications to retrieve secrets. _
+*1Password CLI for Servers*: The CLI can be installed and signed into on
+servers, allowing scripts to access secrets with a dedicated token.
+
+
+
+
+== Example Script for an /etc/fstab mount (on reboot)
+
+IMPORTANT:: See https://developer.1password.com/docs/connect/get-started +
+Setting up Docker support for hosting a 1Password Connect Service instance.
+
+=== 1. Set up a 1Password Service Account
+
+A Service Account provides a token that authenticates the 1Password CLI for
+machine-to-machine communication without a user session.
+
+. Log in to your 1Password web interface.
+. Navigate to Integrations > Developer Tools and select Secrets Automation.
+. Click Add Service Account.
+. Provide a name, such as "SMB Mount", and assign it to the vault containing
+the SMB credentials. This adheres to the principle of least privilege,
+limiting the account's access.
+. Save the generated service account token. This token is a sensitive secret
+and should be handled with care. 
+
+=== 2. Configure the system for Secrets Automation
+
+Next, configure your system's environment to allow the root user to access the
+1Password CLI using the service account.
+
+. Install the 1Password CLI on the machine if you haven't already:
+
+sh
+sudo snap install 1password
+Use code with caution.
+
+. Make the Service Account Token available to the root user.
+
+.Create a hidden configuration directory for 1Password:
+sh
+sudo mkdir -p /root/.config/op
+sudo chown root:root /root/.config/op
+sudo chmod 700 /root/.config/op
+Use code with caution.
+
+Create the token file and paste the service account token into it.
+sh
+sudo nano /root/.config/op/service_account_token
+Use code with caution.
+
+Ensure the token file has tight permissions so only root can read it:
+sh
+sudo chown root:root /root/.config/op/service_account_token
+sudo chmod 600 /root/.config/op/service_account_token
+Use code with caution.
+
+Test the CLI access for root. As the root user, you should be able to read the secret.
+sh
+sudo op read "op://SMB Mount/SMB Credentials/username"
+Use code with caution.
+
+This command should successfully output the username from your vault.
+
+=== 3. Create a systemd service to mount the share
+
+Instead of directly involving fstab with a script, the robust and secure method is to use a systemd service that runs on boot. This service will retrieve the credentials and perform the mount operation.
+Create the systemd service file.
+sh
+sudo nano /etc/systemd/system/smb-mount.service
+Use code with caution.
+
+Add the service configuration.
+ini
+[Unit]
+Description=Mount SMB Share with 1Password Credentials
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c "temp_cred_file=$(mktemp); chmod 600 $temp_cred_file; op read 'op://SMB Mount/SMB Credentials/username' > $temp_cred_file; op read 'op://SMB Mount/SMB Credentials/password' >> $temp_cred_file; mount -t cifs -o credentials=$temp_cred_file,uid=1000,gid=1000 //server/share /mnt/mountpoint; shred --remove $temp_cred_file"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+Use code with caution.
+
+Note: Replace //server/share and /mnt/mountpoint with your actual network path and mount point.
+Note: Adjust uid=1000,gid=1000 to match the user you want to own the mounted files.
+After=network-online.target ensures the service waits for the network to be fully configured before attempting the mount.
+Enable and start the service.
+sh
+sudo systemctl daemon-reload
+sudo systemctl enable smb-mount.service
+sudo systemctl start smb-mount.service
+Use code with caution.
+
+=== 4. Adjust the /etc/fstab file (optional, for dependencies)
+While the mount itself is handled by the systemd service, you can add a dependency in /etc/fstab to ensure other systems that read the file are aware of the mount. 
+ini
+//server/share    /mnt/mountpoint    cifs    noauto,x-systemd.automount,x-systemd.requires=smb-mount.service    0    0
+Use code with caution.
+
+noauto prevents the system from trying to mount it directly, leaving it to the systemd service.
+x-systemd.requires=smb-mount.service ensures that any process accessing this entry in fstab will trigger the smb-mount.service to run first. 
+Why this approach is more secure
+No hardcoded plaintext secrets: Credentials are never written to disk in a permanent, readable format.
+Isolated process: The mount script runs as a systemd service, a privileged and isolated process. The service account token is not exposed to user sessions.
+Biometric independence: The Service Account token operates independently of any user logged in or using biometrics, making it suitable for boot-time operations.
+Temporary credentials file: The temporary credentials file is created, used, and securely wiped all within a single command execution, minimizing its lifespan.

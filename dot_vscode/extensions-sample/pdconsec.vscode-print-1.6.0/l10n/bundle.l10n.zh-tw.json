@@ -1,0 +1,5 @@
+{
+  "An “Access Denied” error occurred while starting the embedded webserver": "啟動嵌入式 Web 伺服器時發生 「Access Denied」 錯誤",
+  "An unexpected error occurred": "發生意外錯誤",
+  "The selected directory contains too many files to print them all. Only the summary will be printed.": "選取目錄包含的檔案太多，無法列印所有檔案。將僅列印摘要。"
+}

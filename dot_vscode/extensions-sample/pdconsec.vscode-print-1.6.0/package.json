@@ -1,0 +1,564 @@
+{
+	"name": "vscode-print",
+	"displayName": "Print",
+	"description": "Rendered Markdown, coloured code.",
+	"version": "1.6.0",
+	"icon": "assets/vscode-print-128.png",
+	"author": {
+		"name": "Peter Wone",
+		"email": "peter.wone@outlook.com"
+	},
+	"publisher": "pdconsec",
+	"galleryBanner": {
+		"color": "Azure"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PDConSec/vsc-print"
+	},
+	"qna": "https://github.com/PDConSec/vsc-print/discussions/categories/q-a",
+	"bugs": {
+		"url": "https://github.com/PDConSec/vsc-print/issues"
+	},
+	"homepage": "https://github.com/PDConSec/vsc-print/discussions/categories/announcements",
+	"engines": {
+		"vscode": "^1.90.0"
+	},
+	"keywords": [
+		"print",
+		"PrintCode",
+		"PDF",
+		"Markdown",
+		"remote"
+	],
+	"categories": [
+		"Other"
+	],
+	"main": "./dist/extension.js",
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"contributes": {
+		"markdown.markdownItPlugins": true,
+		"commands": [
+			{
+				"category": "%commands.category%",
+				"command": "vsc-print.print",
+				"title": "%commands.title.print%",
+				"icon": {
+					"dark": "assets/printer-icon-dog-ear-inverse.svg",
+					"light": "assets/printer-icon-dog-ear.svg"
+				}
+			},
+			{
+				"category": "%commands.category%",
+				"command": "vsc-print.preview",
+				"title": "%commands.title.preview%",
+				"icon": {
+					"dark": "assets/print-preview-icon-inverse.svg",
+					"light": "assets/print-preview-icon.svg"
+				}
+			},
+			{
+				"category": "%commands.category%",
+				"command": "vsc-print.help",
+				"title": "%commands.title.help%"
+			},
+			{
+				"category": "%commands.category%",
+				"command": "vsc-print.openLog",
+				"title": "%commands.title.openLog%"
+			},
+			{
+				"command": "vsc-print.dumpCommands",
+				"title": "Dump commands"
+			},
+			{
+				"command": "vsc-print.dumpProperties",
+				"title": "Dump properties"
+			},
+			{
+				"category": "%commands.category%",
+				"command": "vsc-print.setAlternateBrowser",
+				"title": "%commands.title.setAlternateBrowser%"
+			}
+		],
+		"configuration": [
+			{
+				"title": "%configuration.title%",
+				"properties": {
+					"print.alternateBrowser.path": {
+						"type": "string",
+						"description": "%print.alternateBrowser.path%"
+					},
+					"print.alternateBrowser.enable": {
+						"type": "boolean",
+						"description": "%print.alternateBrowser.enable%",
+						"default": false
+					},
+					"print.folder.exclude": {
+						"default": [
+							"{bin,obj,out}",
+							"node_modules",
+							"data",
+							"**/*.{bin,exe,dll,hex,pdb,pdf,pfx,png,jpg,gif,bmp,suo,design}"
+						],
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "%print.folder.exclude%"
+					},
+					"print.folder.fileNames": {
+						"default": true,
+						"type": "boolean",
+						"description": "%print.folder.fileNames%"
+					},
+					"print.folder.include": {
+						"default": [],
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "%print.folder.include%"
+					},
+					"print.folder.includeFileList": {
+						"default": false,
+						"type": "boolean",
+						"description": "%print.folder.includeFileList%"
+					},
+					"print.folder.maxFiles": {
+						"default": 30,
+						"type": "integer",
+						"description": "%print.folder.maxFiles%"
+					},
+					"print.folder.maxLines": {
+						"default": 1200,
+						"type": "integer",
+						"description": "%print.folder.maxLines%"
+					},
+					"print.general.editorContextMenu.itemPosition": {
+						"default": "Top",
+						"type": "string",
+						"description": "%print.general.editorContextMenu.itemPosition%",
+						"enum": [
+							"Top",
+							"Bottom",
+							"None"
+						]
+					},
+					"print.general.editorTitleMenu.showPreviewIcon": {
+						"default": true,
+						"type": "boolean",
+						"description": "%print.general.editorTitleMenu.showPreviewIcon%"
+					},
+					"print.general.editorTitleMenu.showPrintIcon": {
+						"default": true,
+						"type": "boolean",
+						"description": "%print.general.editorTitleMenu.showPrintIcon%"
+					},
+					"print.general.filepathHeadingForIndividuallyPrintedDocuments": {
+						"description": "%print.general.filepathHeadingForIndividuallyPrintedDocuments%",
+						"type": "boolean",
+						"default": true
+					},
+					"print.general.filepathStyleInHeadings": {
+						"description": "%print.general.filepathStyleInHeadings%",
+						"type": "string",
+						"default": "Relative",
+						"enum": [
+							"Absolute",
+							"Relative"
+						],
+						"enumDescriptions": [
+							"%print.general.filepathStyleInHeadings.absolute%",
+							"%print.general.filepathStyleInHeadings.relative%"
+						]
+					},
+					"print.general.logLevel": {
+						"description": "%print.general.logLevel%",
+						"type": "string",
+						"enum": [
+							"error",
+							"warn",
+							"info",
+							"http",
+							"verbose",
+							"debug",
+							"silly"
+						],
+						"default": "error"
+					},
+					"print.general.pageBreakBetweenFiles": {
+						"type": "boolean",
+						"description": "%print.general.pageBreakBetweenFiles%",
+						"default": false
+					},
+					"print.general.useFilepathInDocumentTitle": {
+						"type": "string",
+						"default": "No path",
+						"description": "%print.general.useFilepathInDocumentTitle%",
+						"enum": [
+							"No path",
+							"Abbreviated path",
+							"Workspace relative"
+						],
+						"markdownEnumDescriptions": [
+							"%print.general.useFilepathInDocumentTitle.markdownEnumDescription1%",
+							"%print.general.useFilepathInDocumentTitle.markdownEnumDescription2%",
+							"%print.general.useFilepathInDocumentTitle.markdownEnumDescription3%"
+						]
+					},
+					"print.markdown.SettleMs": {
+						"type": "number",
+						"default": 3000,
+						"description": "%print.markdown.SettleMs%"
+					},
+					"print.markdown.enableRender": {
+						"type": "boolean",
+						"default": true,
+						"description": "%print.markdown.enableRender%"
+					},
+					"print.markdown.kroki.includePaths": {
+						"default": [
+							"."
+						],
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "%print.folder.include%"
+					},
+					"print.markdown.kroki.rejectUnauthorisedTls": {
+						"description": "%print.markdown.kroki.rejectUnauthorisedTls%",
+						"type": "boolean",
+						"default": true
+					},
+					"print.markdown.kroki.url": {
+						"markdownDescription": "%print.markdown.kroki.url%",
+						"type": "string",
+						"default": "https://kroki.io"
+					},
+					"print.markdown.stylesheets": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "%print.markdown.stylesheets%"
+					},
+					"print.markdown.smartQuotes.enable": {
+						"type": "boolean",
+						"default": true,
+						"description": "%print.markdown.smartQuotes.enable%"
+					},
+					"print.markdown.watermark.text": {
+						"type": "string",
+						"description": "%print.markdown.watermark.text%"
+					},
+					"print.markdown.watermark.enable": {
+						"type": "boolean",
+						"description": "%print.markdown.watermark.enable%",
+						"default": false
+					},
+					"print.plaintext.stylesheets": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "%print.plaintext.stylesheets%"
+					},
+					"print.sourcecode.colourScheme": {
+						"type": "string",
+						"enum": [
+							"[none]",
+							"A11 Y",
+							"Arduino",
+							"Ascetic",
+							"Atom One",
+							"Atelier Cave",
+							"Atelier Dune",
+							"Atelier Estuary",
+							"Atelier Forest",
+							"Atelier Heath",
+							"Atelier Lakeside",
+							"Atelier Plateau",
+							"Atelier Savanna",
+							"Atelier Seaside",
+							"Atelier Sulphur Pool",
+							"Color Brewer",
+							"Docco",
+							"Foundation",
+							"GitHub",
+							"GitHub Gist",
+							"Google Code",
+							"Grayscale",
+							"Gruvbox",
+							"Idea",
+							"ISBL",
+							"Kimbie",
+							"Lightfair",
+							"Magula",
+							"Mono Blue",
+							"nnfx",
+							"Paraiso",
+							"PureBasic",
+							"QTcreator",
+							"RouterOS",
+							"Schoolbook",
+							"Stack Overflow",
+							"Visual Studio",
+							"XCode"
+						],
+						"default": "Atelier Dune",
+						"markdownDescription": "%print.sourcecode.colourScheme.markdownDescription%"
+					},
+					"print.sourcecode.fontSize": {
+						"type": "string",
+						"enum": [
+							"6pt",
+							"7pt",
+							"8pt",
+							"9pt",
+							"10pt",
+							"11pt",
+							"11.5pt",
+							"12pt",
+							"13pt"
+						],
+						"description": "%print.sourcecode.fontSize%",
+						"default": "10pt"
+					},
+					"print.sourcecode.lineNumbers": {
+						"type": "string",
+						"description": "%print.sourcecode.lineNumbers%",
+						"enum": [
+							"on",
+							"off",
+							"inherit"
+						],
+						"default": "inherit"
+					},
+					"print.sourcecode.lineSpacing": {
+						"type": "number",
+						"enum": [
+							1,
+							1.5,
+							2
+						],
+						"enumDescriptions": [
+							"%print.sourcecode.lineSpacing.single%",
+							"%print.sourcecode.lineSpacing.line-and-a-half%",
+							"%print.sourcecode.lineSpacing.double%"
+						],
+						"description": "%print.sourcecode.lineSpacing%",
+						"default": 1
+					},
+					"print.sourcecode.stylesheets": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "%print.sourcecode.stylesheets%"
+					}
+				}
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "ecmPrintMenuItemPosition == Top",
+					"command": "vsc-print.print",
+					"group": "navigation"
+				},
+				{
+					"when": "ecmPrintMenuItemPosition == Top",
+					"command": "vsc-print.preview",
+					"group": "navigation"
+				},
+				{
+					"when": "ecmPrintMenuItemPosition == Bottom",
+					"command": "vsc-print.print",
+					"group": "Z_commands"
+				},
+				{
+					"when": "ecmPrintMenuItemPosition == Bottom",
+					"command": "vsc-print.preview",
+					"group": "Z_commands"
+				}
+			],
+			"editor/title": [
+				{
+					"when": "editorLangId && editorTitleMenuPrintIconVisible",
+					"command": "vsc-print.print",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId && editorTitleMenuPreviewIconVisible",
+					"command": "vsc-print.preview",
+					"group": "navigation"
+				}
+			],
+			"editor/title/context": [
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Top",
+					"command": "vsc-print.print",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Top",
+					"command": "vsc-print.preview",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Bottom",
+					"command": "vsc-print.print",
+					"group": "Z_commands"
+				},
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Bottom",
+					"command": "vsc-print.preview",
+					"group": "Z_commands"
+				}
+			],
+			"editor/context": [
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Top",
+					"command": "vsc-print.print",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Top",
+					"command": "vsc-print.preview",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Bottom",
+					"command": "vsc-print.print",
+					"group": "Z_commands"
+				},
+				{
+					"when": "editorLangId && ecmPrintMenuItemPosition == Bottom",
+					"command": "vsc-print.preview",
+					"group": "Z_commands"
+				}
+			]
+		},
+		"walkthroughs": [
+			{
+				"id": "how-to-print",
+				"title": "%walkthroughs.howToPrint.title%",
+				"description": "%walkthroughs.howToPrint.description%",
+				"steps": [
+					{
+						"id": "print-editor-active",
+						"title": "%walkthroughs.steps.printEditorActive.title%",
+						"media": {
+							"markdown": "%walkthroughs.steps.printEditorActive.media%"
+						},
+						"description": "%walkthroughs.steps.printEditorActive.description%"
+					},
+					{
+						"id": "print-multiline-selection",
+						"title": "%walkthroughs.steps.printASelection.title%",
+						"media": {
+							"markdown": "%walkthroughs.steps.printASelection.media%"
+						},
+						"description": "%walkthroughs.steps.printASelection.description%"
+					},
+					{
+						"id": "print-markdown-rendered",
+						"title": "%walkthroughs.steps.printMarkdownRendered.title%",
+						"media": {
+							"markdown": "%walkthroughs.steps.printMarkdownRendered.media%"
+						},
+						"description": "%walkthroughs.steps.printMarkdownRendered.description%"
+					},
+					{
+						"id": "print-remote",
+						"title": "%walkthroughs.steps.printRemote.title%",
+						"media": {
+							"markdown": "%walkthroughs.steps.printRemote.media%"
+						},
+						"description": "%walkthroughs.steps.printRemote.description%"
+					}
+				]
+			}
+		]
+	},
+	"extensionKind": [
+		"workspace"
+	],
+	"dependencies": {
+		"@viz-js/viz": "^3.11.0",
+		"axios": "^1.8.2",
+		"braces": "^3.0.3",
+		"bufferutil": "^4.0.8",
+		"cheerio": "^1.0.0-rc.12",
+		"cors": "^2.8.5",
+		"handlebars": "^4.7.8",
+		"highlight.js": "^11.9.0",
+		"katex": "^0.16.21",
+		"lodash": "^4.17.21",
+		"marked": "^15.0.6",
+		"micromatch": "^4.0.8",
+		"mssql": "^11.0.1",
+		"mysql2": "^3.11.0",
+		"pako": "^2.1.0",
+		"pg": "^8.12.0",
+		"utf-8-validate": "^6.0.5",
+		"uuid": "^10.0.0",
+		"winston": "^3.11.0",
+		"ws": "^8.18.0",
+		"yaml": "^2.4.5"
+	},
+	"scripts": {
+		"vscode:prepublish": "node gather.js && webpack --mode production",
+		"webpack": "node gather.js && webpack --mode development",
+		"webpack-dev": "node gather.js && webpack --mode development --watch",
+		"compile": "tsc -p ./",
+		"lint": "eslint \"src/**/*.ts\"",
+		"localise": "npx @vscode/l10n-dev export --outDir ./l10n ./src && npx @vscode/l10n-dev generate-azure -o ./l10n/ ./l10n/bundle.l10n.json ./package.nls.json -l zh-Hans ja es ru pt fr ko zh-Hant it pl hu cs bg tr my ca lt hy && node localise-walkthrough-media.js"
+	},
+	"devDependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/braces": "^3.0.4",
+		"@types/cheerio": "^0.22.35",
+		"@types/katex": "^0.16.7",
+		"@types/lodash.merge": "^4.6.9",
+		"@types/micromatch": "^4.0.6",
+		"@types/mocha": "^10.0.6",
+		"@types/mssql": "^9.1.5",
+		"@types/node": "^20.11.24",
+		"@types/pako": "^2.0.3",
+		"@types/pg": "^8.11.6",
+		"@types/uuid": "^10.0.0",
+		"@types/vscode": "^1.90.0",
+		"@types/ws": "^8.5.13",
+		"@typescript-eslint/eslint-plugin": "^7.0.2",
+		"@typescript-eslint/parser": "^7.0.2",
+		"@vscode/test-cli": "^0.0.6",
+		"@vscode/test-electron": "^2.3.9",
+		"@vscode/vsce": "^2.24.0",
+		"css-loader": "^6.10.0",
+		"eslint": "^8.56.0",
+		"file-loader": "^6.2.0",
+		"handlebars-loader": "^1.7.3",
+		"raw-loader": "^4.0.2",
+		"smartquotes": "^2.3.2",
+		"smiles-drawer": "^2.1.7",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.3.3",
+		"webpack": "^5.94.0",
+		"webpack-cli": "^5.1.4"
+	},
+	"l10n": "./l10n",
+	"__metadata": {
+		"id": "05046d70-8146-42f5-ac9e-b97b37c8c0ef",
+		"publisherDisplayName": "PD Consulting",
+		"publisherId": "a803a703-65fb-4fa9-955a-c9259bf2560d",
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1756917150993,
+		"targetPlatform": "undefined",
+		"size": 9169928
+	}
+}

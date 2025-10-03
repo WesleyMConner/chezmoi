@@ -1,0 +1,160 @@
+{
+	"author": "ludwhe",
+	"browser": "dist/web/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"category": "UUID",
+				"command": "vscode-uuid.insertWellKnownUUID",
+				"title": "%vscode-uuid.insertWellKnownUUID.title%"
+			},
+			{
+				"category": "UUID",
+				"command": "vscode-uuid.insertMaxUUID",
+				"title": "%vscode-uuid.insertMaxUUID.title%"
+			},
+			{
+				"category": "UUID",
+				"command": "vscode-uuid.insertNilUUID",
+				"title": "%vscode-uuid.insertNilUUID.title%"
+			},
+			{
+				"category": "UUID",
+				"command": "vscode-uuid.generateUUID",
+				"title": "%vscode-uuid.generateUUID.title%"
+			},
+			{
+				"category": "UUID",
+				"command": "vscode-uuid.generateUUIDWithVersion",
+				"title": "%vscode-uuid.generateUUIDWithVersion.title%"
+			}
+		],
+		"configuration": {
+			"properties": {
+				"vscode-uuid.case": {
+					"default": "lower",
+					"description": "%vscode-uuid.case.description%",
+					"enum": [
+						"lower",
+						"upper"
+					],
+					"enumDescriptions": [
+						"%vscode-uuid.case.lower.enumDescription%",
+						"%vscode-uuid.case.upper.enumDescription%"
+					],
+					"type": "string"
+				},
+				"vscode-uuid.multiCursorBehavior": {
+					"default": "unique",
+					"description": "%vscode-uuid.multiCursorBehavior.description%",
+					"enum": [
+						"unique",
+						"repeat"
+					],
+					"enumDescriptions": [
+						"%vscode-uuid.multiCursorBehavior.unique.enumDescription%",
+						"%vscode-uuid.multiCursorBehavior.repeat.enumDescription%"
+					],
+					"type": "string"
+				},
+				"vscode-uuid.defaultVersion": {
+					"default": "v7",
+					"description": "%vscode-uuid.defaultVersion.description%",
+					"enum": [
+						"v1",
+						"v3",
+						"v4",
+						"v5",
+						"v6",
+						"v7"
+					],
+					"enumDescriptions": [
+						"%vscode-uuid.defaultVersion.v1.enumDescription%",
+						"%vscode-uuid.defaultVersion.v3.enumDescription%",
+						"%vscode-uuid.defaultVersion.v4.enumDescription%",
+						"%vscode-uuid.defaultVersion.v5.enumDescription%",
+						"%vscode-uuid.defaultVersion.v6.enumDescription%",
+						"%vscode-uuid.defaultVersion.v7.enumDescription%"
+					],
+					"type": "string"
+				}
+			},
+			"title": "UUID Generator"
+		},
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "vscode-uuid.insertWellKnownUUID"
+				},
+				{
+					"command": "vscode-uuid.insertMaxUUID"
+				},
+				{
+					"command": "vscode-uuid.insertNilUUID"
+				},
+				{
+					"command": "vscode-uuid.generateUUID"
+				},
+				{
+					"command": "vscode-uuid.generateUUIDWithVersion"
+				}
+			]
+		}
+	},
+	"dependencies": {
+		"uuid": "^11.0.3"
+	},
+	"description": "Generates UUIDs (v1, v3, v4, v5, v6, v7) inside your editor.",
+	"devDependencies": {
+		"@tsconfig/recommended": "^1.0.8",
+		"@types/node": "^22.10.5",
+		"@types/vscode": "^1.96.0",
+		"@typescript-eslint/eslint-plugin": "^8.19.0",
+		"@typescript-eslint/parser": "^8.19.0",
+		"@vscode/l10n-dev": "^0.0.35",
+		"@vscode/test-electron": "^2.4.1",
+		"@vscode/vsce": "^3.2.1",
+		"eslint": "^9.17.0",
+		"ts-loader": "^9.5.1",
+		"ts-node": "^10.9.2",
+		"tslib": "^2.8.1",
+		"typescript": "^5.7.2",
+		"webpack": "^5.97.1",
+		"webpack-cli": "^6.0.1"
+	},
+	"displayName": "UUID Generator",
+	"engines": {
+		"vscode": "^1.96.0"
+	},
+	"icon": "icon.png",
+	"keywords": [
+		"guid",
+		"uuid"
+	],
+	"l10n": "./l10n",
+	"license": "ISC",
+	"main": "dist/extension.js",
+	"name": "vscode-uuid",
+	"publisher": "ludwhe",
+	"qna": "https://github.com/ludwhe/vscode-uuid/discussions/categories/q-a",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ludwhe/vscode-uuid.git"
+	},
+	"scripts": {
+		"build": "tsc -p ./",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"pretest": "npm run build",
+		"test": "node ./dist/test/runTest.js",
+		"vscode:prepublish": "npm run package",
+		"watch": "tsc -watch -p ./",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch"
+	},
+	"version": "2.0.0",
+	"__metadata": {
+		"installedTimestamp": 1756917008764,
+		"targetPlatform": "undefined",
+		"size": 81542
+	}
+}

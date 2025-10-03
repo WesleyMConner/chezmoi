@@ -1,0 +1,7 @@
+#!/bin/bash
+brew update
+brew autoremove
+brew upgrade
+brew autoremove
+# brew list
+brew deps --tree --installed

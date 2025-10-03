@@ -1,0 +1,12 @@
+# .zshenv
+#   - This file is always sourced in a z shell.
+
+# VARIABLES REQUIRED UNIVERSALLY
+
+# set PATH
+
+# EDITOR - Specifies the which editor to open when a command requires input.
+# set EDITOR = NANO <- N.B.: The specifics of nano vary by platform.
+
+# PAGER - Specifies how to display command output on page at a time.
+# set PAGER

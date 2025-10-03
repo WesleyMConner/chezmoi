@@ -1,0 +1,45 @@
+!#/bin/bash
+
+echo '\n\nUpdating brew'
+./Sync/bin/brew-maint
+
+if 
+go install tailscale.com/cmd/tailscale{,d}@main
+sudo cp $HOME/go/bin/tailscale /usr/local/bin/
+$ brew install go
+$ go install tailscale.com/cmd/tailscale{,d}@main
+
+# Relocate the now-built binaries and run tailscaled as a part of launchd
+# On AMD64, copying *just* tailscale into /usr/local/bin
+note: deliberately different than the ARM64 strategy below.
+$ sudo cp $HOME/go/bin/tailscale /usr/local/bin/
+# Launchd makes a copy of tailscaled in /usr/local/bin and manages it.
+$ sudo $HOME/go/bin/tailscaled install-system-daemon
+# 6/20/22 - sudo /usr/local/Tailscale/bin/tailscaled install-system-daemon
+
+# On ARM64, co-locating tailscale *AND* tailscaled with brew tactically
+$ cp $HOME/go/bin/* /opt/homebrew/bin
+# Launchd makes a copy of tailscaled in /usr/local/bin and manages it.
+$ sudo /opt/homebrew/bin/tailscaled install-system-daemon
+
+# Both Architectures have a resulting plist.
+ls -lahF /Library/LaunchDaemons/com.tailscale.tailscaled.plist
+
+001 ~$ go install tailscale.com/cmd/tailscale{,d}@v1.26.0
+002 ~$ ls -1 go/bin
+    tailscale
+    tailscaled
+003 ~$ sudo mkdir -p /opt/tailscale/bin
+004 ~$ sudo cp go/bin/tailscale* /opt/tailscale/bin
+005 ~$ sudo ln -s /opt/tailscale/bin/tailscale /usr/local/bin/tailscale
+006 ~$ sudo /opt/tailscale/bin/tailscaled install-system-daemon
+007 ~$ ls -l /usr/local/bin/tailscale*
+    lrwxr-xr-x  ... tailscale -> /opt/tailscale/bin/tailscale
+    -rwxr-xr-x  ... tailscaled                  # Written by line 004
+008 ~$ sudo launchctl list | grep tailscaled
+    10872	0	com.tailscale.tailscaled
+009 ~$ sudo launchctl unload /Library/LaunchDaemons/com.tailscale.tailscaled.plist
+010 ~$ sudo launchctl load /Library/LaunchDaemons/com.tailscale.tailscaled.plist
+011 ~$ sudo launchctl list | grep tailscaled
+    10981	0	com.tailscale.tailscaled
+012 ~$ tailscale version

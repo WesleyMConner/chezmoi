@@ -1,0 +1,6 @@
+{
+  "has been set as the alternate browser for printing.": "yazdırma için alternatif tarayıcı olarak ayarlanmıştır.",
+  "An “Access Denied” error occurred while starting the embedded webserver": "Gömülü web sunucusu başlatılırken bir \"Erişim Reddedildi\" hatası oluştu",
+  "An unexpected error occurred": "Beklenmeyen bir hata oluştu",
+  "The selected directory contains too many files to print them all. Only the summary will be printed.": "Seçilen dizin, tümünü yazdırmak için çok fazla dosya içeriyor. Sadece özet yazdırılacaktır."
+}

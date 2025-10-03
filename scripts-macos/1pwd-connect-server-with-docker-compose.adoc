@@ -1,0 +1,68 @@
+= 1Password Connect Server Setup
+
+== Configure 1Password Connect Server with Docker Compose
+
+For hosting the 1Password Connect server, use Docker Compose to define and run
+the two necessary services: connect-api and connect-sync. This approach is
+robust and repeatable.
+
+. Create a Secrets Automation Workflow on 1Password.com to get your server
+credentials. Download the 1password-credentials.json file and save it in a
+dedicated directory for your server, for example, ~/1password-connect/.
+
+.~/1password-connect
+[source, bash]
+----
+mkdir ~/1password-connect
+
+----
+. Create a docker-compose.yml file in the same directory (~/1password-connect/) with the following content. This configuration sets up a persistent volume for data and links the credentials file.
+
+[source, yaml]
+----
+yaml
+version: "3.7"
+services:
+  connect-sync:
+    image: 1password/connect-sync:latest
+    environment:
+      - OP_BUS_PEERS=127.0.0.1:11224
+    volumes:
+      - ./1password-credentials.json:/home/opuser/.op/1password-credentials.json
+      - connect-data:/home/opuser/.op/data
+    networks:
+      - connect-net
+    restart: always
+
+  connect-api:
+    image: 1password/connect-api:latest
+    environment:
+      - OP_BUS_PEERS=127.0.0.1:11224
+    volumes:
+      - ./1password-credentials.json:/home/opuser/.op/1password-credentials.json
+    ports:
+      - "8080:8080"
+    networks:
+      - connect-net
+    depends_on:
+      - connect-sync
+    restart: always
+
+volumes:
+  connect-data:
+
+networks:
+  connect-net:
+    driver: bridge
+----
+
+. Launch the server: From the ~/1password-connect/ directory, run:
+
+[source, bash]
+----
+sh
+docker compose up -d
+----
+
+This command starts the containers in the background. Your server will be
+accessible at http://localhost:8080. 

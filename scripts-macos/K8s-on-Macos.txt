@@ -1,0 +1,39 @@
+To use K8s on MacOS (w/ 8G or RAM):
+  - Using Homebrew, install worked on Saturn:
+      - brew install ubuntu/microk8s/microk8s
+      - microk8s install --channel stable
+  - But, failed on Jupiter (iMac):
+      - FAILED ATTEMPTS WITH HOMEBREW
+          - softwareupdate --all --install --force (needed macOS Monterey 12.4 tools)
+            Which, took forever and did not solve the problem.
+          - Take 2: XCode via the AppStore first slow, then crapped out. So very Apple.
+          - Take 3: via Chrome 'https://developer.apple.com/download/applications/' then
+            https://developer.apple.com/services-account/download?path=/Developer_Tools/Xcode_13.4/Xcode_13.4.xip
+            Unzipped as xcode (the executable) in Downloads, drug it into Applications/
+            It took two attempts before xcode installed as 30-Apr-2022 at 32.44 GB
+            AND STILL: "Error: Your Command Line Tools are too outdated."
+      - The non-Homebrew solution (using Curl) worked.
+          - See https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
+          - INSTALL:
+              curl -LO "https://dl.k8s.io/release/v1.24.0/bin/darwin/amd64/kubectl"
+          - VALIDATE: 
+              curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl.sha256"
+              echo "$(cat kubectl.sha256)  kubectl" | shasum -a 256 --check
+          - RELOCATE:
+              chmod 0755 kubectl
+              sudo mv ./kubectl /usr/local/bin/kubectl
+              sudo chown root: /usr/local/bin/kubectl
+   - COMPARISON (kubectl version --client --output=yaml)
+                  Jupiter                                  Saturn
+                  ---------------------------------------- ------------------------- 
+                  /usr/local/bin/kubectl                   /opt/homebrew/bin/kubectl
+       buildDate: "2022-05-03T13:46:05Z"                   "2022-05-03T13:36:49Z"
+        compiler: gc                                       same
+       gitCommit: 4ce5a8954017644c5420bae81d72b09b735c21f0 same
+    gitTreeState: clean                                    same
+      gitVersion: v1.24.0                                  same
+       goVersion: go1.18.1                                 same
+           major: "1"                                      same
+           minor: "24"                                     same
+        platform: darwin/amd64                             darwin/arm64
+kustomizeVersion: v4.5.4                                   v4.5.4

@@ -1,0 +1,48 @@
+version: "0.2"
+language: en
+caseSensitive: false
+ignorePaths:
+  - _antora/
+  - .gitlab-ci.yml
+  - .gitpod.yml
+  - .vscode
+  - "**.svg"
+  - "**/__data__/**"
+  - "**/images/**"
+  - public/
+  - coverage/
+  - dist/
+  - node_modules/
+  - package.json
+words:
+
+  - adoc
+  - adocs
+  - antora
+  - asciidoc
+  - asciidoctor
+  - autowidth
+  - csjs
+  - dind
+  - dochub
+  - dotfile
+  - dotfiles
+  - flexsearch
+  - ints
+  - kompose
+  - linkfs
+  - memfs
+  - nofollow
+  - noopener
+  - npmignore
+  - opigence
+  - parms
+  - popd
+  - pushd
+  - stylelint
+  - syncthing
+  - tailscale
+  - tsbuildinfo
+  - tsdoc
+  - tsnode
+  - tsup

@@ -1,0 +1,6 @@
+{
+  "has been set as the alternate browser for printing.": "beállítása alternatív böngészőként van beállítva a nyomtatáshoz.",
+  "An “Access Denied” error occurred while starting the embedded webserver": "\"Hozzáférés megtagadva\" hiba történt a beágyazott webszerver indításakor",
+  "An unexpected error occurred": "Váratlan hiba történt",
+  "The selected directory contains too many files to print them all. Only the summary will be printed.": "A kiválasztott könyvtár túl sok fájlt tartalmaz ahhoz, hogy mindet kinyomtassa. Csak az összefoglaló kerül nyomtatásra."
+}

@@ -1,0 +1,6 @@
+{
+  "has been set as the alternate browser for printing.": "已设置为打印的备用浏览器。",
+  "An “Access Denied” error occurred while starting the embedded webserver": "启动嵌入式 Web 服务器时发生 “Access Denied” 错误",
+  "An unexpected error occurred": "发生意外错误",
+  "The selected directory contains too many files to print them all. Only the summary will be printed.": "所选目录包含的文件太多，无法打印所有文件。将仅打印摘要。"
+}

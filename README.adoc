@@ -1,0 +1,72 @@
+= Chezmoi Developer Environment
+
+This project facilitates environment management in a manner that anticipates
+cross-platform development. It can be used to bootstrap new developer
+environments, including:
+
+* iMac17,1 running Ubuntu LTS 24.04 (primary development platform)
+
+* RPis (three available for lab or steady state prod work)
+
+* A Mac Mini M1 running the latest MacOS and brew (minimal dev use)
+
+* Support for Docker, direnv, and 1Password CLI.
+
+On a given machine, soft links may "point back to" files and folders
+in this project.
+
+== File Naming Conventions
+
+=== Top Level
+
+.chezmoiignore::
+This optional file in the source root specifies patterns for files or
+directories that Chezmoi should ignore, preventing them from being managed.
+
+.chezmoiroot::
+This optional file can be used to specify a subdirectory within the source
+directory as the effective root of the source state, allowing for better
+organization if the root of your dotfiles repository contains many entries.
+
+.chezmoitemplates/::
+An optional directory containing reusable templates that can be included in
+other templates.
+
+=== Managed Dotfiles
+
+dot_*::
+For files or directories that should be prefixed with a dot (.) in the
+destination, e.g., dot_gitconfig in the source becomes .gitconfig in the
+destination.
+
+private_*::
+For private files or directories that should have restricted permissions in the
+destination.
+
+exact_*::
+For directories that should be exactly mirrored, meaning any extra files in the
+destination directory will be removed.
+
+symlink_*::
+For creating symbolic links in the destination.
+
+*.tmpl::
+Templates that use Go template syntax to incorporate machine-specific data
+(e.g., from your Chezmoi config file).
+
+=== Per-Machine
+
+~/.config/chezmoi/chezmoi[.toml|.json|.yaml]::
+This is the configuration file for Chezmoi, typically located in your XDG
+config directory. It stores machine-specific settings and data that can be used
+within your templates.
+
+== Chezmoi Links
+
+* https://www.chezmoi.io//[Home]
+* https://www.chezmoi.io/user-guide/command-overview/[User Guide]
+* https://www.chezmoi.io/reference/[Reference]
+* https://www.chezmoi.io/developer-guide/[Developer Guide]
+* https://www.chezmoi.io/links/articles/[Recommended Articles]
+
+

@@ -1,0 +1,10 @@
+- Do a safety save of home drive files to /mnt/T7_DATA.
+- Apply the edits for the Broadcom WiFi driver.
+- BACKUP -> REBOOT -> TEST
+- Apply the edits for Google Chrome
+- BACKUP -> REBOOT -> TEST
+
+
+
+- Use "./scripts/setup-restic" to configure personal drive storage.
+

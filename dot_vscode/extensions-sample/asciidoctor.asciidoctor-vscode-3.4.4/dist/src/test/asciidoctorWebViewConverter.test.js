@@ -1,0 +1,380 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const vscode_1 = __importDefault(require("vscode"));
+const path_1 = __importDefault(require("path"));
+const asciidoctorWebViewConverter_1 = require("../asciidoctorWebViewConverter");
+const previewConfig_1 = require("../features/previewConfig");
+const assert_1 = __importDefault(require("assert"));
+const sinon_1 = __importDefault(require("sinon"));
+const antoraContext_1 = require("../features/antora/antoraContext");
+const workspace_1 = require("../util/workspace");
+const workspaceHelper_1 = require("./workspaceHelper");
+const asciidoctor = require('@asciidoctor/core');
+const processor = asciidoctor();
+class TestWebviewResourceProvider {
+    constructor() {
+        this.cspSource = 'aaaa';
+    }
+    asWebviewUri(resource) {
+        return resource;
+    }
+    asMediaWebViewSrc(...pathSegments) {
+        return pathSegments.toString();
+    }
+}
+class TestAsciidocContributions {
+    constructor() {
+        this.previewResourceRoots = [];
+        this.previewScripts = [];
+        this.previewStyles = [];
+    }
+}
+function createAntoraDocumentContextStub(resourcePath) {
+    const antoraDocumentContextStub = sinon_1.default.createStubInstance(antoraContext_1.AntoraDocumentContext);
+    antoraDocumentContextStub.resolveAntoraResourceIds.returns(resourcePath);
+    return antoraDocumentContextStub;
+}
+function createConverterOptions(converter, fileName) {
+    // treat the file as the source file for conversion to handle xref correctly between documents
+    // review src/asciidocEngin.ts for more information
+    const intrinsicAttr = {
+        docdir: path_1.default.dirname(fileName),
+        docfile: fileName,
+        docfilesuffix: path_1.default.extname(fileName).substring(1),
+        docname: path_1.default.basename(fileName, path_1.default.extname(fileName)),
+        filetype: converter.outfilesuffix.substring(1),
+    };
+    return {
+        converter,
+        attributes: {
+            ...intrinsicAttr,
+            // required for navigation between source files in preview
+            // see: https://docs.asciidoctor.org/asciidoc/latest/macros/inter-document-xref/#navigating-between-source-files
+            relfilesuffix: '.adoc',
+        },
+        safe: 'unsafe', // needed so that we can actually perform includes, enabling xref tests
+    };
+}
+async function testAsciidoctorWebViewConverter(input, antoraDocumentContext, expected, root, pathSegments) {
+    const file = await vscode_1.default.workspace.openTextDocument(vscode_1.default.Uri.joinPath(root, ...pathSegments));
+    const asciidoctorWebViewConverter = new asciidoctorWebViewConverter_1.AsciidoctorWebViewConverter(file, new TestWebviewResourceProvider(), 2, false, new TestAsciidocContributions(), new previewConfig_1.AsciidocPreviewConfigurationManager().loadAndCacheConfiguration(file.uri), antoraDocumentContext, undefined);
+    const html = processor.convert(input, createConverterOptions(asciidoctorWebViewConverter, file.fileName));
+    assert_1.default.strictEqual(html, expected);
+}
+async function testAsciidoctorWebViewConverterStandalone(input, antoraDocumentContext, expected, root, pathSegments) {
+    const file = await vscode_1.default.workspace.openTextDocument(vscode_1.default.Uri.joinPath(root, ...pathSegments));
+    const asciidoctorWebViewConverter = new asciidoctorWebViewConverter_1.AsciidoctorWebViewConverter(file, new TestWebviewResourceProvider(), 2, false, new TestAsciidocContributions(), new previewConfig_1.AsciidocPreviewConfigurationManager().loadAndCacheConfiguration(file.uri), antoraDocumentContext, undefined);
+    const html = processor.convert(input, {
+        ...createConverterOptions(asciidoctorWebViewConverter, file.fileName),
+        standalone: true,
+    });
+    html.includes(expected);
+}
+suite('AsciidoctorWebViewConverter', async () => {
+    const createdFiles = [];
+    suiteSetup(async () => {
+        createdFiles.push(await (0, workspaceHelper_1.createDirectory)('images'));
+        await (0, workspaceHelper_1.createFile)('', 'images', 'ocean', 'waves', 'seaswell.png');
+        await (0, workspaceHelper_1.createFile)('', 'images', 'mountain.jpeg');
+        createdFiles.push(await (0, workspaceHelper_1.createFile)('', 'help.adoc'));
+        const asciidocFile = await (0, workspaceHelper_1.createFile)(`image::images/ocean/waves/seaswell.png[]
+
+image::images/mountain.jpeg[]
+
+link:help.adoc[]
+`, 'asciidoctorWebViewConverterTest.adoc');
+        createdFiles.push(await (0, workspaceHelper_1.createDirectory)('docs'));
+        await (0, workspaceHelper_1.createFile)('', 'docs', 'modules', 'ROOT', 'pages', 'dummy.adoc'); // virtual file
+        createdFiles.push(asciidocFile);
+        // these help with testing xref cross documents
+        createdFiles.push(await (0, workspaceHelper_1.createFile)(`= Parent document
+
+Some text
+
+[#anchor]
+== Link to here
+
+Please scroll me into position
+
+include::docB.adoc[]`, 'docA.adoc'));
+        createdFiles.push(await (0, workspaceHelper_1.createFile)(`= Child document
+
+[#other_anchor]
+== Other link to here
+
+Other text
+
+I want to link to xref:docA.adoc#anchor[]`, 'docB.adoc'));
+        createdFiles.push(await (0, workspaceHelper_1.createFile)(`= Child document
+
+third text
+
+I want to link to xref:docB.adoc#other_anchor[]`, 'docC.adoc'));
+    });
+    suiteTeardown(async () => {
+        await (0, workspaceHelper_1.removeFiles)(createdFiles);
+    });
+    const workspaceUri = (0, workspace_1.getDefaultWorkspaceFolderUri)();
+    // WIP need to find more interesting test cases
+    const testCases = [
+        // images
+        {
+            title: 'Unresolved image resource id from Antora (fallback to base converter)',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'image::1.0@wyoming:sierra-madre:panorama.png[]',
+            antoraDocumentContext: createAntoraDocumentContextStub(undefined),
+            expected: `<div class="imageblock">
+<div class="content">
+<img src="1.0@wyoming:sierra-madre:panorama.png" alt="1.0@wyoming:sierra madre:panorama">
+</div>
+</div>`,
+        },
+        {
+            title: 'Should resolve image src with Antora id\'s input and Antora support activated',
+            filePath: ['docs', 'modules', 'ROOT', 'pages', 'dummy.adoc'],
+            input: 'image::2.0@cli:commands:seaswell.png[]',
+            antoraDocumentContext: createAntoraDocumentContextStub(`${workspaceUri.path}/antora/multiComponents/cli/modules/commands/images/seaswell.png`),
+            expected: `<div class="imageblock">
+<div class="content">
+<img src="${workspaceUri.path}/antora/multiComponents/cli/modules/commands/images/seaswell.png" alt="seaswell">
+</div>
+</div>`,
+        },
+        // links
+        {
+            title: 'Should resolve macro link',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'link:full.adoc[]',
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="full.adoc" class="bare" data-href="full.adoc">full.adoc</a></p>
+</div>`,
+        },
+        {
+            title: 'Should resolve macro link with roles',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'link:full.adoc[role="action button"]',
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="full.adoc" class="bare action button" data-href="full.adoc">full.adoc</a></p>
+</div>`,
+        },
+        // xref
+        {
+            title: 'Should resolve "xref:" macro from included document referencing the source document',
+            filePath: ['docA.adoc'],
+            input: `= Parent document
+
+Some text
+
+[#anchor]
+== Link to here
+
+Please scroll me into position
+
+include::docB.adoc[]`,
+            antoraDocumentContext: undefined,
+            expected: '<a href="#anchor" data-href="#anchor">Link to here</a>',
+            standalone: true,
+        },
+        {
+            title: 'Should resolve "xref:" macro from included document referencing a separate included document',
+            filePath: ['docA.adoc'],
+            input: `= Parent document
+
+Some text
+
+[#anchor]
+== Link to here
+
+Please scroll me into position
+
+include::docB.adoc[]
+
+include::docC.adoc[]`,
+            antoraDocumentContext: undefined,
+            expected: '<a href="#other_anchor" data-href="#other_anchor">Other link to here</a>',
+            standalone: true,
+        },
+        {
+            title: 'Should resolve "xref:" macro to document',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'xref:other.adoc[]',
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="other.adoc" data-href="other.adoc">other.adoc</a></p>
+</div>`,
+        },
+        {
+            title: 'Should resolve "xref:" macro to document - with explicit text',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'xref:other.adoc[Other document]',
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="other.adoc" data-href="other.adoc">Other document</a></p>
+</div>`,
+        },
+        {
+            title: 'Should resolve "xref:" macro to document - with roles',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'xref:other.adoc[role="foo"]',
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="other.adoc" class="foo" data-href="other.adoc">other.adoc</a></p>
+</div>`,
+        },
+        {
+            title: 'Should resolve "xref:" macro for internal cross reference',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `xref:_text_test[]
+
+= Text test`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#_text_test" data-href="#_text_test">Text test</a></p>
+</div>
+<h1 id="_text_test" class="sect0">Text test</h1>
+`,
+        },
+        {
+            title: 'Should resolve "xref:" macro for internal cross reference - with explicit text',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `xref:_text_test[Explicit text]
+
+= Text test`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#_text_test" data-href="#_text_test">Explicit text</a></p>
+</div>
+<h1 id="_text_test" class="sect0">Text test</h1>
+`,
+        },
+        {
+            title: 'Should resolve "xref:" macro for internal cross reference - with reftext',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `xref:_reftext_test[]
+
+[reftext="Test reftext"]
+= Reftext Test`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#_reftext_test" data-href="#_reftext_test">Test reftext</a></p>
+</div>
+<h1 id="_reftext_test" class="sect0">Reftext Test</h1>
+`,
+        },
+        {
+            title: 'Should resolve "xref:" macro for internal cross reference - with reftext and explicit text',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `xref:_reftext_test[Explicit text]
+
+[reftext="Test reftext"]
+= Reftext Test`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#_reftext_test" data-href="#_reftext_test">Explicit text</a></p>
+</div>
+<h1 id="_reftext_test" class="sect0">Reftext Test</h1>
+`,
+        },
+        {
+            title: 'Should resolve "xref:" macro for internal cross reference - without matching anchor',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: 'xref:_non_existing_ref_test[]',
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#_non_existing_ref_test" data-href="#_non_existing_ref_test">_non_existing_ref_test</a></p>
+</div>`,
+        },
+        {
+            title: 'Should resolve "xref:" macro to inline anchor - without text',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `<<inline_anchor_without_text>>
+
+[[inline_anchor_without_text]]Some text`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#inline_anchor_without_text" data-href="#inline_anchor_without_text">inline_anchor_without_text</a></p>
+</div>
+<div class="paragraph">
+<p><a id="inline_anchor_without_text"></a>Some text</p>
+</div>`,
+        },
+        {
+            title: 'Should resolve "xref:" macro to inline anchor - with explicit text',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `<<inline_anchor_with_explicit_text>>
+
+[[inline_anchor_with_explicit_text,Explicit text]]Some text`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p><a href="#inline_anchor_with_explicit_text" data-href="#inline_anchor_with_explicit_text">Explicit text</a></p>
+</div>
+<div class="paragraph">
+<p><a id="inline_anchor_with_explicit_text"></a>Some text</p>
+</div>`,
+        },
+        {
+            title: 'Should not add role doc to content when no Antora context is provided',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: '= Test Document',
+            antoraDocumentContext: undefined,
+            expected: '<div id="content">',
+            standalone: true,
+        },
+        {
+            title: 'Add role doc to content when Antora context is provided',
+            filePath: ['docs', 'modules', 'ROOT', 'pages', 'dummy.adoc'],
+            input: '= Test Document',
+            antoraDocumentContext: createAntoraDocumentContextStub(undefined),
+            expected: '<div id="content" class="doc">',
+            standalone: true,
+        },
+        {
+            title: 'Should honor xrefstyle',
+            filePath: ['asciidoctorWebViewConverterTest.adoc'],
+            input: `= Document Title
+:xrefstyle: short
+
+See <<my-table>> for more reference.
+
+See xref:my-table[xrefstyle=short] for more reference.
+
+.Title of my table
+[#my-table]
+|===
+|data
+|===`,
+            antoraDocumentContext: undefined,
+            expected: `<div class="paragraph">
+<p>See <a href="#my-table" data-href="#my-table">Table 1</a> for more reference.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#my-table" data-href="#my-table">Table 1</a> for more reference.</p>
+</div>
+<table id="my-table" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Title of my table</caption>
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data</p></td>
+</tr>
+</tbody>
+</table>`,
+        },
+    ];
+    for (const testCase of testCases) {
+        if (testCase.standalone) {
+            test(testCase.title, async () => testAsciidoctorWebViewConverterStandalone(testCase.input, testCase.antoraDocumentContext, testCase.expected, workspaceUri, testCase.filePath));
+        }
+        else {
+            test(testCase.title, async () => testAsciidoctorWebViewConverter(testCase.input, testCase.antoraDocumentContext, testCase.expected, workspaceUri, testCase.filePath));
+        }
+    }
+});
+//# sourceMappingURL=asciidoctorWebViewConverter.test.js.map

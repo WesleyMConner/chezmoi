@@ -1,0 +1,7 @@
+# .zshrc
+#   - Applies to interactive shells
+#   - Contains the setopt and unsetopt commands.
+#   - Loads shell modules.
+#   - Sets options for history, prompts, completion, ....
+#   - Houses shell-only variables.
+#   - Command aliases iff `shopt -s expand_aliases`.

@@ -1,0 +1,4 @@
+__data__/
+.eslintrc.cjs
+dist/
+jest.config.ts

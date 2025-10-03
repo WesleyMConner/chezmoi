@@ -1,0 +1,3 @@
+# .zlogin
+#  - If login, sourced after .zshrc
+#  - A common use is to start an X session.

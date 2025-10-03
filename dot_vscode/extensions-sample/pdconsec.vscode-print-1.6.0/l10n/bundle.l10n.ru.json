@@ -1,0 +1,6 @@
+{
+  "has been set as the alternate browser for printing.": "был установлен в качестве альтернативного браузера для печати.",
+  "An “Access Denied” error occurred while starting the embedded webserver": "При запуске встроенного веб-сервера произошла ошибка «Отказано в доступе»",
+  "An unexpected error occurred": "Произошла непредвиденная ошибка",
+  "The selected directory contains too many files to print them all. Only the summary will be printed.": "Выбранный каталог содержит слишком много файлов, чтобы распечатать их все. Будет напечатано только резюме."
+}

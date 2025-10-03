@@ -1,0 +1,13 @@
+{
+	"messages": [
+		"Could not load 'asciidoc.styles': {0}",
+		"[Preview] {0}",
+		"Preview {0}"
+	],
+	"keys": [
+		"preview.styleLoadError.message",
+		"preview.locked.title",
+		"preview.unlocked.title"
+	],
+	"filePath": "features/preview"
+}

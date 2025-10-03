@@ -1,0 +1,13 @@
+{
+	"messages": [
+		"Yes",
+		"No, thanks",
+		"We detect that you are working with Antora. Do you want to activate Antora support?"
+	],
+	"keys": [
+		"antora.activateSupport.yes",
+		"antora.activateSupport.no",
+		"antora.activateSupport.message"
+	],
+	"filePath": "features/antora/antoraContext"
+}

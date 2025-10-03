@@ -1,0 +1,4 @@
+= The history folder
+
+Retaining some terminal history (short-term) for consultation and review.
+

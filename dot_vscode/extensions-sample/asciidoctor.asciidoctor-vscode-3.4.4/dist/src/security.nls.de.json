@@ -1,0 +1,19 @@
+[
+	"Strikt",
+	"Nur sichere Inhalte laden.",
+	"Unsichere lokale Inhalte erlauben.",
+	"Erlaube das Laden von Inhalten über HTTP von localhost.",
+	"Unsichere Inhalte erlauben.",
+	"Erlaube das Laden von Inhalten über HTTP.",
+	"Deaktivieren",
+	"Alle Inhalte und Skriptausführung erlauben. Nicht empfohlen.",
+	"Sicherheitswarnung im Arbeitsbereich aktivieren.",
+	"Sicherheitswarnung im Arbeitsbereich deaktivieren.",
+	"Bitte beachten: Diese Einstellung hat keine Auswirkungen auf die Sicherheitsstufe für Inhalte.",
+	"Sicherheitseinstellung für Asciidoc Vorschau in diesem Arbeitsbereich auswählen.",
+	"Nicht Vertrauenswürdig",
+	"Ausführung von Asciidoctor.js Erweiterungen wird verhindert.",
+	"Vertrauenswürdig",
+	"Ausführung von Asciidoctor.js Erweiterungen wird gestattet.",
+	"Einschränkungen für Asciidoctor.js Erweiterungen in diesen Arbeitsbereich auswählen."
+]

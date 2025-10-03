@@ -1,0 +1,300 @@
+{
+	"name": "vscode-groovy-lint",
+	"displayName": "Groovy Lint, Format and Fix",
+	"description": "Lint, format and auto-fix groovy and Jenkinsfile",
+	"publisher": "NicolasVuillamy",
+	"version": "3.3.1",
+	"license": "MIT",
+	"icon": "icon.png",
+	"engines": {
+		"vscode": "^1.75.0",
+		"node": ">=14.0.0"
+	},
+	"scripts": {
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"lint": "eslint --ext ts client/src server/src",
+		"lint:fix": "eslint --ext ts --fix client/src server/src",
+		"pretest": "run-s compile lint",
+		"pretest:verbose": "run-s compile lint",
+		"test": "node ./client/out/test/runTest.js 2>&1 |grep -v :ERROR:",
+		"test:coverage": "env AUTO_ACCEPT_REPLACE_TABS=activated node ./client/out/test/runTest.js --codecoverage",
+		"test:debug": "env AUTO_ACCEPT_REPLACE_TABS=activated DEBUG=npm-groovy-lint,vscode-groovy-lint NPM_DEBUG=npm-groovy-lint,vscode-groovy-lint node --inspect-brk ./client/out/test/runTest.js",
+		"test:verbose": "env AUTO_ACCEPT_REPLACE_TABS=activated DEBUG=vscode-groovy-lint NPM_DEBUG=vscode-groovy-lint node ./client/out/test/runTest.js",
+		"postinstall": "cd client && npm install --unsafe-perm && cd ../server && npm install --unsafe-perm && cd ..",
+		"vscode:prepublish": "run-s dev:pre-commit",
+		"dev:pre-commit": "run-s lint:fix compile && cp -f README.md docs/index.md",
+		"mocha": "mocha --require ts-node/register --require source-map-support/register --timeout 10000 --recursive ./client/src/test",
+		"vstest": "vscode-test"
+	},
+	"categories": [
+		"Programming Languages",
+		"Linters",
+		"Formatters"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nvuillam/vscode-groovy-lint"
+	},
+	"keywords": [
+		"groovy",
+		"lint",
+		"jenkinsfile",
+		"codenarc",
+		"linter",
+		"npm-groovy-lint",
+		"auto-fix",
+		"fix",
+		"format",
+		"package",
+		"wrapper",
+		"vscode",
+		"extension"
+	],
+	"bugs": {
+		"url": "https://github.com/nvuillam/vscode-groovy-lint/issues"
+	},
+	"homepage": "https://github.com/nvuillam/vscode-groovy-lint#readme",
+	"badges": [
+		{
+			"url": "https://img.shields.io/visual-studio-marketplace/v/NicolasVuillamy.vscode-groovy-lint",
+			"href": "https://marketplace.visualstudio.com/items?itemName=NicolasVuillamy.vscode-groovy-lint",
+			"description": "Badge for version for Visual Studio Code extension VsCode Groovy Lint"
+		},
+		{
+			"url": "https://img.shields.io/visual-studio-marketplace/i/NicolasVuillamy.vscode-groovy-lint",
+			"href": "https://marketplace.visualstudio.com/items?itemName=NicolasVuillamy.vscode-groovy-lint",
+			"description": "Badge for installs for Visual Studio Code extension VsCode Groovy Lint"
+		},
+		{
+			"url": "https://circleci.com/gh/nvuillam/vscode-groovy-lint/tree/master.svg?style=shield",
+			"href": "https://circleci.com/gh/nvuillam/vscode-groovy-lint/tree/master",
+			"description": "CircleCI"
+		},
+		{
+			"url": "https://codecov.io/gh/nvuillam/vscode-groovy-lint/branch/master/graph/badge.svg",
+			"href": "https://codecov.io/gh/nvuillam/vscode-groovy-lint",
+			"description": "Code Coverage"
+		},
+		{
+			"url": "https://img.shields.io/github/license/nvuillam/vscode-groovy-lint.svg",
+			"href": "https://github.com/nvuillam/vscode-groovy-lint/blob/master/LICENSE",
+			"description": "GitHub license"
+		},
+		{
+			"url": "https://img.shields.io/github/stars/nvuillam/vscode-groovy-lint.svg?label=Star&maxAge=2592000",
+			"href": "https://GitHub.com/nvuillam/vscode-groovy-lint/stargazers/",
+			"description": "GitHub stars"
+		},
+		{
+			"url": "https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square",
+			"href": "https://makeapullrequest.com",
+			"description": "PRs Welcome"
+		}
+	],
+	"devDependencies": {
+		"@types/mocha": "^10.0.6",
+		"@types/node": "^20.10.4",
+		"@typescript-eslint/eslint-plugin": "^7.0.0",
+		"@typescript-eslint/parser": "^7.0.0",
+		"eslint": "^8.56.0",
+		"mocha": "^10.2.0",
+		"npm-run-all2": "^6.0.0",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.3.3"
+	},
+	"activationEvents": [
+		"onLanguage:groovy",
+		"onLanguage:jenkinsfile",
+		"workspaceContains:**/Jenkins*",
+		"workspaceContains:**/*.nf",
+		"workspaceContains:**/*.gradle"
+	],
+	"main": "./client/out/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "groovyLint.lint",
+				"title": "Analyze code"
+			},
+			{
+				"command": "groovyLint.lintFix",
+				"title": "Fix all auto-fixable problems"
+			},
+			{
+				"command": "groovyLint.lintFolder",
+				"title": "Analyze groovy files in this folder"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"when": "resourceLangId == groovy || resourceLangId == jenkinsfile",
+					"command": "groovyLint.lint"
+				},
+				{
+					"when": "resourceLangId == groovy || resourceLangId == jenkinsfile",
+					"command": "groovyLint.lintFix"
+				},
+				{
+					"when": "filesExplorerFocus && explorerResourceIsFolder",
+					"command": "groovyLint.lintFolder"
+				}
+			],
+			"editor/context": [
+				{
+					"when": "resourceLangId == groovy || resourceLangId == jenkinsfile",
+					"command": "groovyLint.lint",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceLangId == groovy || resourceLangId == jenkinsfile",
+					"command": "groovyLint.lintFix",
+					"group": "navigation"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "groovyLint.lintFolder",
+					"group": "groovylint",
+					"when": "filesExplorerFocus && explorerResourceIsFolder"
+				}
+			]
+		},
+		"keybindings": [
+			{
+				"command": "groovyLint.lint",
+				"key": "ctrl+shift+F9",
+				"mac": "cmd+shift+F9",
+				"when": "editorFocus && (resourceLangId == groovy || resourceLangId == jenkinsfile)"
+			},
+			{
+				"command": "groovyLint.lintFix",
+				"key": "ctrl+shift+F10",
+				"mac": "cmd+shift+F10",
+				"when": "editorFocus && (resourceLangId == groovy || resourceLangId == jenkinsfile)"
+			},
+			{
+				"command": "groovyLint.lintFolder",
+				"key": "ctrl+shift+F11",
+				"mac": "cmd+shift+F11",
+				"when": "filesExplorerFocus && explorerResourceIsFolder"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Groovy Lint",
+			"properties": {
+				"groovyLint.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Controls whether GroovyLint is enabled or not."
+				},
+				"groovyLint.showProblemsView": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Show Problems View once after start."
+				},
+				"groovyLint.lint.trigger": {
+					"scope": "resource",
+					"type": "string",
+					"enum": [
+						"onSave",
+						"onType",
+						"user"
+					],
+					"default": "onType",
+					"description": "Run the linter on type (recommended), on save (if you have a slow config), or after user request"
+				},
+				"groovyLint.fix.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Enables GroovyLint as an error fixer"
+				},
+				"groovyLint.fix.trigger": {
+					"scope": "resource",
+					"type": "string",
+					"enum": [
+						"onSave",
+						"user"
+					],
+					"description": "Fix errors on save (onSave) or after user request (user)",
+					"default": "user"
+				},
+				"groovyLint.format.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Enables GroovyLint as a formatter."
+				},
+				"groovyLint.format.useDocumentIndentSize": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Use the indent size provided by VsCode (overrides Indentation.spacesPerIndentLevel property in .groovylintrc.json)"
+				},
+				"groovyLint.basic.loglevel": {
+					"scope": "resource",
+					"type": "string",
+					"enum": [
+						"error",
+						"warning",
+						"info"
+					],
+					"enumDescriptions": [
+						"Only error messages",
+						"Error and warning messages",
+						"Error,Warning and info messages"
+					],
+					"default": "info",
+					"description": "Linting error level"
+				},
+				"groovyLint.basic.verbose": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Verbose logs for npm-groovy-lint"
+				},
+				"groovyLint.basic.config": {
+					"scope": "resource",
+					"type": "string",
+					"description": "Override Config file to use for linter"
+				},
+				"groovyLint.debug.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Display debugging info in output panel"
+				},
+				"groovyLint.java.executable": {
+					"scope": "resource",
+					"type": "string",
+					"description": "Path to java executable if you do not want to use system default"
+				},
+				"groovyLint.java.options": {
+					"scope": "resource",
+					"type": "string",
+					"description": "Comma separated arguments for java (default \"-Xms256m,-Xmx2048m\")"
+				},
+				"groovyLint.insight.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Allow to send anonymous statistics used only to improve the tool (we will of course never receive your code)"
+				}
+			}
+		}
+	},
+	"__metadata": {
+		"id": "32b3756e-9965-4229-8971-4e5066dadc2c",
+		"publisherDisplayName": "Nicolas Vuillamy",
+		"publisherId": "fbae1b7a-6fed-4e8e-9cf8-c29a68d1357f",
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1756917115175,
+		"targetPlatform": "undefined",
+		"size": 39703609
+	}
+}
